@@ -8,6 +8,7 @@ import { ArticleDetailsComponent } from './article-details/article-details.compo
 import { ArticleEditionComponent } from './article-edition/article-edition.component';
 import { ArticleListComponent } from './article-list/article-list.component';
 import { LoginComponent } from './login/login.component';
+import { HttpClientModule } from '@angular/common/http';
 
 @NgModule({
   declarations: [
@@ -20,7 +21,8 @@ import { LoginComponent } from './login/login.component';
   imports: [
     BrowserModule,
     AppRoutingModule,
-    NgbModule
+    NgbModule,
+    HttpClientModule
   ],
   providers: [],
   bootstrap: [AppComponent]
