@@ -9,11 +9,10 @@ import { ArticleEditionComponent } from './article-edition/article-edition.compo
 import { ArticleListComponent } from './article-list/article-list.component';
 import { LoginComponent } from './login/login.component';
 import { HttpClientModule } from '@angular/common/http';
-import { CategoryNationalFilterPipe } from './pipes/category-national-filter.pipe';
-import { CategoryInternationalFilterPipe } from './pipes/category-international-filter.pipe';
-import { CategoryEconomyFilterPipe } from './pipes/category-economy-filter.pipe';
-import { CategorySportsFilterPipe } from './pipes/category-sports-filter.pipe';
 import { FormsModule } from '@angular/forms';
+import { NavbarComponent } from './navbar/navbar.component';
+import { CategoryPipe } from './pipes/category.pipe';
+import { SearchPipe } from './pipes/search.pipe';
 
 
 @NgModule({
@@ -23,10 +22,9 @@ import { FormsModule } from '@angular/forms';
     ArticleEditionComponent,
     ArticleListComponent,
     LoginComponent,
-    CategoryNationalFilterPipe,
-    CategoryInternationalFilterPipe,
-    CategoryEconomyFilterPipe,
-    CategorySportsFilterPipe
+    NavbarComponent,
+    CategoryPipe,
+    SearchPipe
   ],
   imports: [
     BrowserModule,
