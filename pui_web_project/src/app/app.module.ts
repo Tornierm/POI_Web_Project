@@ -13,6 +13,8 @@ import { CategoryNationalFilterPipe } from './pipes/category-national-filter.pip
 import { CategoryInternationalFilterPipe } from './pipes/category-international-filter.pipe';
 import { CategoryEconomyFilterPipe } from './pipes/category-economy-filter.pipe';
 import { CategorySportsFilterPipe } from './pipes/category-sports-filter.pipe';
+import { FormsModule } from '@angular/forms';
+
 
 @NgModule({
   declarations: [
@@ -30,7 +32,8 @@ import { CategorySportsFilterPipe } from './pipes/category-sports-filter.pipe';
     BrowserModule,
     AppRoutingModule,
     NgbModule,
-    HttpClientModule
+    HttpClientModule,
+    FormsModule
   ],
   providers: [],
   bootstrap: [AppComponent]

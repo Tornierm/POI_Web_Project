@@ -1,1 +1,28 @@
-<p>login works!</p>
+<!-- Login Form with username, password and a primary login button -->
+<div *ngIf="!isLogged; else elseBlock">
+    <form>
+        <div class="row justify-content-end">
+            <div class="col-2">
+            <input type="text" class="form-control" placeholder="Username" [(ngModel)]="tmpUser.username" name="something"> <!--Input for username-->
+            </div>
+            <div class="col-2">
+            <input type="password" class="form-control" placeholder="Password" [(ngModel)]="tmpUser.passwd" name="something"> <!--Input for password-->
+            </div>
+            <div class="col-1">
+            <button class="btn btn-primary" type="submit" (click)="login()">Log In</button> <!-- Primary button to send the login data-->
+            </div>
+        </div>
+    </form>
+    <!-- Welcome message + Username and sign out button -->
+</div>
+
+<ng-template #elseBlock>
+<div class="row justify-content-end" *ngIf="loggedInUser !== null"> 
+    <div class="col-2">
+        <p class="text-end"> Welcome {{loggedInUser.username}}</p> 
+    </div>
+    <div class="col-1">
+        <button class="btn btn-primary" (click)="logout()">Log Out</button> 
+    </div>
+    </div>
+</ng-template>

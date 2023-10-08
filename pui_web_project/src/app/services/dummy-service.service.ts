@@ -18,22 +18,34 @@ export class DummyServiceService {
     {id: 6, id_user: 1, abstract: "Abstarct 6", subtitle: "Subtitle 6", body: "Body artikel 6", update_date: new Date(), category: "Economy", title: "Titel 6", thumbnail_image: "???", thumbnail_media_type: "Type 1"},
   ]
 
-  user: User = {
+  user1: User = {
     id: 1,
     username: "admin",
     passwd: "admin"
   }
 
-  login(username: string, passwd: string): User{
-    if(username == this.user.username && passwd == this.user.passwd){
-      return this.user;
+  user: User | null = null;
+
+  login(username: string, passwd: string){
+    if(username == "admin" && passwd == "admin"){
+      this.user = this.user1;
     }
     else {
-      let fakeUser: User = {id: 0, username: "", passwd: ""};
-      return fakeUser;
+      this.user = null;
     }
   }
 
+  isLogged() {
+    return this.user != null;
+  }
+
+  getUser() {
+    return this.user;
+  }
+
+  logout() {
+    this.user = null;
+  }
 
   getArticles(): Article[] {
     return this.articles;
