@@ -9,6 +9,10 @@ import { ArticleEditionComponent } from './article-edition/article-edition.compo
 import { ArticleListComponent } from './article-list/article-list.component';
 import { LoginComponent } from './login/login.component';
 import { HttpClientModule } from '@angular/common/http';
+import { CategoryNationalFilterPipe } from './pipes/category-national-filter.pipe';
+import { CategoryInternationalFilterPipe } from './pipes/category-international-filter.pipe';
+import { CategoryEconomyFilterPipe } from './pipes/category-economy-filter.pipe';
+import { CategorySportsFilterPipe } from './pipes/category-sports-filter.pipe';
 
 @NgModule({
   declarations: [
@@ -16,7 +20,11 @@ import { HttpClientModule } from '@angular/common/http';
     ArticleDetailsComponent,
     ArticleEditionComponent,
     ArticleListComponent,
-    LoginComponent
+    LoginComponent,
+    CategoryNationalFilterPipe,
+    CategoryInternationalFilterPipe,
+    CategoryEconomyFilterPipe,
+    CategorySportsFilterPipe
   ],
   imports: [
     BrowserModule,
