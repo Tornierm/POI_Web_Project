@@ -22,6 +22,10 @@
           <h2 class="text-center">EIT-Newspaper</h2> <!-- Header of the page -->
       </div>
 
+      <div>
+        <button class=" col-3 btn btn-primary" (click)="newArticle()">New</button>
+      </div>
+
 
       <!-- Login Form with username, password and a primary login button -->
       <div *ngIf="loggedInUser.username == ''"> <!-- ngIf so that the login form is only displayed if the username is empty-->
@@ -93,8 +97,8 @@
             <h5 class="text-center">{{article.subtitle}}</h5> <!-- Subtitle of the article-->
             <p class="card-text text-center">{{article.abstract}}</p> <!-- Abstract of the article-->
             <div class="row justify-content-end" *ngIf="loggedInUser.username != ''"> <!-- Display the edit & delete buttons only if username is empty-->
-              <button class=" col-3 btn btn-primary">Edit</button> <!-- Cards contain buttons to edit articles -->
-              <button class=" col-3 btn btn-danger">Delete</button> <!-- Cards contain buttons to delete articles -->
+              <button class=" col-3 btn btn-primary" (click)="editArticle(article.id)">Edit</button> <!-- Cards contain buttons to edit articles -->
+              <button class=" col-3 btn btn-danger" (click)="deleteArticle(article.id)">Delete</button> <!-- Cards contain buttons to delete articles -->
             </div>
           </div>
         </div>

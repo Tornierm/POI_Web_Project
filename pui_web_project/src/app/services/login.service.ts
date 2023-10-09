@@ -10,7 +10,7 @@ import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 
 export class LoginService {
 
-  private user!: User;
+  private user!: User |null;
 
   private loginUrl = 'http://sanger.dia.fi.upm.es/pui-rest-news/login';
 

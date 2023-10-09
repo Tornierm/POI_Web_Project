@@ -18,7 +18,7 @@ export class NewsService {
   constructor(private http: HttpClient) { }
 
   // Set the corresponding APIKEY accordig to the received by email
-  private APIKEY: string;
+  private APIKEY!: string;
   private APIKEY_ANON = 'xxxxxx';
 
   private httpOptions = {

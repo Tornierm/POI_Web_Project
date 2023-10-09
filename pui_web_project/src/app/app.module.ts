@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
+import { FormsModule } from '@angular/forms';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -30,6 +31,7 @@ import { CategorySportsFilterPipe } from './pipes/category-sports-filter.pipe';
     BrowserModule,
     AppRoutingModule,
     NgbModule,
+    FormsModule,
     HttpClientModule
   ],
   providers: [],

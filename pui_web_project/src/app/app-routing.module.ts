@@ -8,8 +8,9 @@ import { LoginComponent } from './login/login.component';
 const routes: Routes = [
   {path:"", component: ArticleListComponent},
   {path:"details", component: ArticleDetailsComponent},
-  {path:"edit", component: ArticleEditionComponent},
-  {path:"login", component: LoginComponent}
+  {path:"edit/:id", component: ArticleEditionComponent},
+  {path:"login", component: LoginComponent},
+
 ];
 
 @NgModule({

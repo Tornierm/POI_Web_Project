@@ -1,1 +1,83 @@
-<p>article-edition works!</p>
+<h2>Edit/Create Article</h2>
+<br>
+<form #articleForm="ngForm" (ngSubmit)="saveArticle()">
+    <div class="container">
+        <div class="row">
+            <div class="form-group col-md-6">
+                <!--Title-->
+                <h4>Title: </h4>
+                <input type="text" class="form-control" [(ngModel)]="article.title" name="artTitle" #artTitle="ngModel"
+                    required [ngClass]="artTitle.valid ? 'ng-valid.required' : 'ng-invalid.required'">
+
+                <div class="alert alert-danger" *ngIf="!artTitle.valid">
+                    <div *ngIf="artTitle.errors && artTitle.errors['required']">Please provide a title for the article.
+                    </div>
+                </div>
+            </div>
+            <div class="form-group col-md-2"></div>
+            <div class="form-group col-md-4">
+                <!--Category-->
+                <h4>Category: </h4>
+                <input type="text" class="form-control" [(ngModel)]="article.category" name="artCat" #artCat="ngModel"
+                    required [ngClass]="artCat.valid ? 'ng-valid.required' : 'ng-invalid.required'"
+                    pattern="(National|International|Sports|Economy)">
+
+                <div class="alert alert-danger" *ngIf="!artCat.valid">
+                    <div *ngIf="artCat.errors && artCat.errors['required']">Please provide a category for the
+                        article.
+                    </div>
+                </div>
+            </div>
+        </div>
+        <br>
+        <div class="row">
+            <div class="form-group col-md-6">
+                <!--Subtitle-->
+                <h4>Subtitle: </h4>
+                <input type="text" required class="form-control" [(ngModel)]="article.subtitle" name="artSubtitle"
+                    #artSubtitle="ngModel">
+            </div>
+            <div class="form-group col-md-2"></div>
+            <div class="form-group col-md-4">
+                <!--Thumbnail-->
+                <h4>Thumbnail: </h4>
+                <input type="file" class="form-control" (change)="fileChangeEvent(article.image_data)"[(ngModel)]="article.image_data" name="artImage"
+                    #artImage="ngModel">
+            </div>
+        </div>
+        <br>
+        <div class="row">
+            <div class="form-group col-md-6">
+                <!--Abstract-->
+                <h4>Abstract: </h4>
+                <input type="text" required class="form-control" [(ngModel)]="article.abstract" name="artAbstract"
+                    #artAbstract="ngModel" [ngClass]="artAbstract.valid ? 'ng-valid.required': 'ng-invalid.required'">
+
+                <div class="alert alert-danger" *ngIf="!artAbstract.valid">
+                    <div *ngIf="artAbstract.errors && artAbstract.errors['required']">Please provide an abstract for the article.
+                    </div>
+                </div>
+            </div>
+        </div>
+        <br>
+        <div class="row">
+            <div class="form-group col-md-6">
+                <!--Body-->
+                <h4>Body: </h4>
+                <textarea class="span10" rows="10" cols="87" [(ngModel)]="article.body" name="artBody"
+                    #artBody="ngModel">
+                </textarea>
+            </div>
+        </div>
+        <br>
+        <div class="row">
+            <div class="form-group col-md-2">
+                <button class="btn btn-primary btn-sm mr-1" type="button" (click)="clearForm()">Clear</button>
+            </div>
+            <div class="form-group col-md-2">
+                <button class="btn btn-primary btn-sm mr-1" type="button" (click)="saveArticle()"
+                    [disabled]="!articleForm.form.valid">Save</button>
+            </div>
+        </div>
+    </div>
+</form>
