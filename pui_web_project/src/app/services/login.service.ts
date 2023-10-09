@@ -10,11 +10,11 @@ import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 
 export class LoginService {
 
-  private user!: User;
+  private user: User | null = null;
 
   private loginUrl = 'http://sanger.dia.fi.upm.es/pui-rest-news/login';
 
-  private message!: string;
+  private message: any;
 
   private httpOptions = {
     headers: new HttpHeaders()

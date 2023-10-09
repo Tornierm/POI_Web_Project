@@ -23,31 +23,8 @@
       </div>
 
 
-      <!-- Login Form with username, password and a primary login button -->
-      <div *ngIf="loggedInUser.username == ''"> <!-- ngIf so that the login form is only displayed if the username is empty-->
-          <form>
-              <div class="row justify-content-end">
-                <div class="col-2">
-                  <input type="text" class="form-control" placeholder="Username"> <!--Input for username-->
-                </div>
-                <div class="col-2">
-                  <input type="password" class="form-control" placeholder="Password"> <!--Input for password-->
-                </div>
-                <div class="col-1">
-                  <button class="btn btn-primary" type="submit">Log In</button> <!-- Primary button to send the login data-->
-                </div>
-              </div>
-          </form>
-      </div>
-      <!-- Welcome message + Username and sign out button -->
-      <div class="row justify-content-end" *ngIf="loggedInUser.username != ''"> <!--LogIn with username & logout button is only displayed when username is not empty-->
-        <div class="col-2">
-          <p class="text-end"> Welcome {{loggedInUser.username}}</p> <!-- Personalized welcome message -->
-        </div>
-        <div class="col-1">
-          <button class="btn btn-primary">Log Out</button> <!-- LogOut button-->
-        </div>
-      </div>
+      <app-login></app-login>
+      
 
 
       <!-- Filter section for the categories & free text -->
@@ -74,7 +51,7 @@
             <div class="d-flex">
               <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search"> <!-- free text search for shown articles -->
             </div>
-            <div *ngIf="loggedInUser.username != ''"> <!-- display the create article button only if username is not empty-->
+            <div *ngIf="isLogged"> <!-- display the create article button only if username is not empty-->
               <button class="btn btn-primary">Create Article</button>    <!-- Contains a create article button -->
             </div>
           </div>
@@ -92,7 +69,7 @@
             <h4 class="card-title text-center">{{article.title}}</h4> <!-- Title of the article-->
             <h5 class="text-center">{{article.subtitle}}</h5> <!-- Subtitle of the article-->
             <p class="card-text text-center">{{article.abstract}}</p> <!-- Abstract of the article-->
-            <div class="row justify-content-end" *ngIf="loggedInUser.username != ''"> <!-- Display the edit & delete buttons only if username is empty-->
+            <div class="row justify-content-end" *ngIf="isLogged"> <!-- Display the edit & delete buttons only if username is empty-->
               <button class=" col-3 btn btn-primary">Edit</button> <!-- Cards contain buttons to edit articles -->
               <button class=" col-3 btn btn-danger">Delete</button> <!-- Cards contain buttons to delete articles -->
             </div>

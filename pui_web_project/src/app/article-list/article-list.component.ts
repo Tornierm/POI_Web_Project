@@ -11,16 +11,9 @@ import { DummyServiceService } from '../services/dummy-service.service';
 })
 export class ArticleListComponent {
 
-  constructor(private newsService: DummyServiceService, private loginService: DummyServiceService){}
+  constructor(private newsService: DummyServiceService){}
 
   articles: Article[] = this.newsService.getArticles();
 
-  loggedInUser: User = this.loginService.login("admin","admin");
-
-
-
-
-
-  
-
+  isLogged = this.newsService.isLogged()
 }
