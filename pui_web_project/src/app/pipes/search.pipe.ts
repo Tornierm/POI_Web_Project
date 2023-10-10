@@ -7,11 +7,13 @@ import { Article } from '../interfaces/article';
 export class SearchPipe implements PipeTransform {
 
   transform(articles: Article[], term: string): Article[] {
+    console.log(term)
+
     if (term == "") return articles;
     term = term.toLowerCase();
 
     return articles.filter(article => {
-      return article.body.toLowerCase().includes(term) || article.subtitle.toLowerCase().includes(term) || article.abstract.toLowerCase().includes(term) || article.body.toLowerCase().includes(term);
+      return article.subtitle.toLowerCase().includes(term) || article.abstract.toLowerCase().includes(term);
     });
   }
 

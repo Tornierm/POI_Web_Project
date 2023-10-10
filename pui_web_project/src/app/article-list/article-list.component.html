@@ -23,7 +23,34 @@
       </div>
 
 
-      <app-login></app-login>
+      <!-- Login Form with username, password and a primary login button -->
+        <div *ngIf="!isLogged; else elseBlock">
+          <form>
+              <div class="row justify-content-end">
+                  <div class="col-2">
+                  <input type="text" class="form-control" placeholder="Username" [(ngModel)]="tmpUser.username" name="something"> <!--Input for username-->
+                  </div>
+                  <div class="col-2">
+                  <input type="password" class="form-control" placeholder="Password" [(ngModel)]="tmpUser.passwd" name="something"> <!--Input for password-->
+                  </div>
+                  <div class="col-1">
+                  <button class="btn btn-primary" type="submit" (click)="login()">Log In</button> <!-- Primary button to send the login data-->
+                  </div>
+              </div>
+          </form>
+          <!-- Welcome message + Username and sign out button -->
+        </div>
+
+        <ng-template #elseBlock>
+        <div class="row justify-content-end" *ngIf="loggedInUser !== null"> 
+          <div class="col-2">
+              <p class="text-end"> Welcome {{loggedInUser.username}}</p> 
+          </div>
+          <div class="col-1">
+              <button class="btn btn-primary" (click)="logout()">Log Out</button> 
+          </div>
+          </div>
+        </ng-template>
       
       <!-- Filter section for the categories & free text -->
       <nav class="navbar navbar-expand-lg"> 
@@ -45,6 +72,9 @@
               <li class="nav-item">
                 <button class="nav-link" href="#" (click)="setCategory(Category.Economy)">Economy</button> <!-- Filter for economy articles -->
               </li>
+              <li class="nav-item">
+                <button class="nav-link" href="#" (click)="setCategory(Category.Technology)">Technology</button> <!-- Filter for economy articles -->
+              </li>
             </ul>
             <div class="d-flex">
               <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search" [(ngModel)]="searchTerm" > <!-- free text search for shown articles -->
@@ -58,7 +88,7 @@
       <!-- Cards for articles including title, subtitle, image & abstracts -->
       <div class="card-columns">
         <div class="card" *ngFor="let article of articles | category:category | search:searchTerm"> <!-- Iterate over the articles to display all of them -->
-          <img class="card-img-top" src="https://media.istockphoto.com/id/937170838/de/vektor/fernsehen-test-muster-aus-streifen.jpg?s=612x612&w=0&k=20&c=7UB3mSLlGW73opaNA05lUyOs_I-h4q-MbZoSycFG-9k=" alt="Card image cap">
+          <img class="card-img-top" src="{{'data:image/jpg;base64,' + article.thumbnail_image}}" alt="Card image cap">
           <div class="card-body">
             <h4 class="card-title text-center">{{article.title}}</h4> <!-- Title of the article-->
             <h5 class="text-center">{{article.subtitle}}</h5> <!-- Subtitle of the article-->
