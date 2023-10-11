@@ -9,9 +9,9 @@ import { User } from '../interfaces/user';
 export class DummyServiceService {
 
   constructor() { }
-  articles: Article[] = [
-     {id: 1, id_user: 1, abstract: "Abstarct 1", subtitle: "Subtitle 1", body: "Body artikel 1", update_date: new Date(), category: "Economy", title: "Titel 1", image_data: "???", image_media_type: "Type 1", isImageSaved: true, imageError:"", cardImageBase64:""}
-  ];
+  articles: Article[] = [];
+     //{id: 1, id_user: 1, abstract: "Abstarct 1", subtitle: "Subtitle 1", body: "Body artikel 1", update_date: new Date(), category: "Economy", title: "Titel 1", image_data: "???", image_media_type: "Type 1", isImageSaved: true, imageError:"", cardImageBase64:""}
+  //];
 
   //   {id: 2, id_user: 1, abstract: "Abstarct 2", subtitle: "Subtitle 2", body: "Body artikel 2", update_date: new Date(), category: "National", title: "Titel 2", thumbnail_image: "???", thumbnail_media_type: "Type 1"},
   //   {id: 3, id_user: 1, abstract: "Abstarct 3", subtitle: "Subtitle 3", body: "Body artikel 3", update_date: new Date(), category: "International", title: "Titel 3", thumbnail_image: "???", thumbnail_media_type: "Type 1"},
@@ -21,7 +21,11 @@ export class DummyServiceService {
   
 
   user1: User = {
-    id: 1,
+    Authorization: "",
+    expires: "",
+    apikey: "",
+    group: 1,
+    user: 1,
     username: "admin",
     passwd: "admin"
   }

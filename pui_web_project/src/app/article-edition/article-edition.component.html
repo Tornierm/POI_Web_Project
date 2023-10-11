@@ -16,6 +16,14 @@
             </div>
             <div class="form-group col-md-2"></div>
             <div class="form-group col-md-4">
+                <!--Thumbnail-->
+                <h4>Thumbnail: </h4>
+                <img style="width: 150px; height: 150px;" [src]="'data:' + article.thumbnail_media_type + ';base64,' + article.thumbnail_image ">
+                <br>
+                <input type="file" class="form-control" (change)="fileChangeEvent($event)"
+                    [(ngModel)]="article.thumbnail_image" name="artImage" #artImage="ngModel">
+            </div>
+            <div class="form-group col-md-4">
                 <!--Category-->
                 <h4>Category: </h4>
                 <input type="text" class="form-control" [(ngModel)]="article.category" name="artCat" #artCat="ngModel"
@@ -36,14 +44,6 @@
                 <h4>Subtitle: </h4>
                 <input type="text" required class="form-control" [(ngModel)]="article.subtitle" name="artSubtitle"
                     #artSubtitle="ngModel">
-            </div>
-            <div class="form-group col-md-2"></div>
-            <div class="form-group col-md-4">
-                <!--Thumbnail-->
-                <h4>Thumbnail: </h4>
-                <img [src]="'data:' + article.image_media_type + ';base64,' + article.image_data ">
-                <input type="file" class="form-control" (change)="fileChangeEvent(article.image_data)"
-                    [(ngModel)]="article.image_data" name="artImage" #artImage="ngModel">
             </div>
         </div>
         <br>

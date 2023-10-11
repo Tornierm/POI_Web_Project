@@ -19,7 +19,11 @@ export class LoginComponent implements OnInit {
   }
 
   tmpUser: User = {
-    id: 0,
+    Authorization: "",
+    expires:"",
+    user: 0,
+    group: 0,
+    apikey: "",
     username: "",
     passwd: "",
   };

@@ -19,7 +19,22 @@ import { DummyServiceService } from '../services/dummy-service.service';
 export class ArticleEditionComponent implements OnInit {
 
   articleObs!: Observable<Article>;
-  article!: Article;
+  article: Article = {
+    aut: 0,
+    id: 0,
+    id_user: 0,
+    abstract: "",
+    subtitle: "",
+    body: "",
+    update_date: new Date(),
+    category: "",
+    title: "",
+    thumbnail_image: "", 
+    thumbnail_media_type: "",
+    is_deleted: 0,
+    is_public: 0,
+    username: ""
+  } ;
   @ViewChild('articleForm') articleForm: any;
   user!: User | null;
   
@@ -57,21 +72,19 @@ export class ArticleEditionComponent implements OnInit {
     this.user = this.loginService.getUser();
 
     if (this.user != null) {
-      this.article.id_user = this.user.id;
+      this.article.id_user = this.user.user;
     }
   }
 
 
   saveArticle() {
+    debugger
     this.setDate();
     this.getUser();
 
-    if(this.article.image_data == null){
-      this.article.image_data = "https://media.istockphoto.com/id/937170838/de/vektor/fernsehen-test-muster-aus-streifen.jpg?s=612x612&w=0&k=20&c=7UB3mSLlGW73opaNA05lUyOs_I-h4q-MbZoSycFG-9k="
-    }
 
     //check if article already exists
-    if (this.newsService.getArticle(this.article.id) != null) {
+    if (this.article.id != 0) {
       //article exists
       this.newsService.updateArticle(this.article);
 
@@ -81,6 +94,7 @@ export class ArticleEditionComponent implements OnInit {
       
     }
     window.alert("The article" + this.article.title + "has been saved succesfully!");
+    this.location.back();
   }
 
   
@@ -109,9 +123,9 @@ export class ArticleEditionComponent implements OnInit {
           this.cardImageBase64 = imgBase64Path;
           this.isImageSaved = true;
 
-          this.article.image_media_type = fileInput.target.files[0].type;
-          const head = this.article.image_media_type.length + 13;
-          this.article.image_data = e.target.result.substring(head, e.target.result.length);
+          this.article.thumbnail_media_type = fileInput.target.files[0].type;
+          const head = this.article.thumbnail_media_type.length + 13;
+          this.article.thumbnail_image = e.target.result.substring(head, e.target.result.length);
 
         };
       };

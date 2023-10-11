@@ -32,7 +32,7 @@ export class ArticleListComponent {
     //this.value = this.route.snapshot.paramMap.get('value'); 
   }
 
-  articles: Article[] = [];
+  articles: Article [] = [];
 
   getArticles(){
     this.newsService.getArticles().subscribe(
@@ -75,7 +75,11 @@ export class ArticleListComponent {
   }
 
   tmpUser: User = {
-    id: 0,
+    Authorization: "",
+    apikey: "",
+    expires: "",
+    group: 0,
+    user: 0,
     username: "",
     passwd: "",
   };

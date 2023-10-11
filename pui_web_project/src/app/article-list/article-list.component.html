@@ -90,7 +90,8 @@
               [(ngModel)]="searchTerm"> <!-- free text search for shown articles -->
           </div>
           <div *ngIf="isLogged"> <!-- display the create article button only if username is not empty-->
-            <button class="btn btn-primary" (click)="newArticle()">Create Article</button> <!-- Contains a create article button -->
+            <button class="btn btn-primary" (click)="newArticle()">Create Article</button>
+            <!-- Contains a create article button -->
           </div>
         </div>
       </div>
@@ -99,7 +100,8 @@
     <div class="card-columns">
       <div class="card" *ngFor="let article of articles | category:category | search:searchTerm">
         <!-- Iterate over the articles to display all of them -->
-        <img class="card-img-top" src="{{'data:image/jpg;base64,' + article.image_data}}" alt="Card image cap">
+        <img class="card-img-top" [src]="'data:' + article.thumbnail_media_type + ';base64,' + article.thumbnail_image "
+          alt="Card image cap">
         <div class="card-body">
           <h4 class="card-title text-center">{{article.title}}</h4> <!-- Title of the article-->
           <h5 class="text-center">{{article.subtitle}}</h5> <!-- Subtitle of the article-->
