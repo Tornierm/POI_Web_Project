@@ -88,9 +88,11 @@
       <!-- Cards for articles including title, subtitle, image & abstracts -->
       <div class="card-columns">
         <div class="card" *ngFor="let article of articles | category:category | search:searchTerm"> <!-- Iterate over the articles to display all of them -->
-          <img class="card-img-top" src="{{'data:image/jpg;base64,' + article.thumbnail_image}}" alt="Card image cap">
+          <img class="card-img-top" src="{{'data:image/jpg;base64,' + article.thumbnail_image}}" alt="Card image cap" [routerLink]="['/details', article.id]"> <!--Added to link to specific article details-->
           <div class="card-body">
-            <h4 class="card-title text-center">{{article.title}}</h4> <!-- Title of the article-->
+            <a [routerLink]="['/details', article.id]"> <!--Added to link to specific article details-->
+              <h4 class="card-title text-center">{{article.title}}</h4> <!-- Title of the article-->
+            </a>
             <h5 class="text-center">{{article.subtitle}}</h5> <!-- Subtitle of the article-->
             <p class="card-text text-center">{{article.abstract}}</p> <!-- Abstract of the article-->
             <div class="row justify-content-end" *ngIf="isLogged"> <!-- Display the edit & delete buttons only if username is empty-->

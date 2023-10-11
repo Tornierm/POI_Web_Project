@@ -1,1 +1,21 @@
-<p>article-details works!</p>
+<div *ngIf="article">
+    <h2>{{ article.title }}</h2>
+    <h4>{{ article.subtitle }}</h4>
+    <p><strong>Category: </strong> {{ article.category }}</p>
+    <p><strong>Abstract: <br></strong> {{ article.abstract }}</p>
+
+    <!-- Display the article image if available, it doesn't work currently... 
+    <div *ngIf="article.thumbnail_image && article.thumbnail_media_type">
+        <img [src]="'data:' + article.thumbnail_media_type + ';base64,' + article.thumbnail_image">
+    </div>
+    -->
+
+    <p><strong>Body:</strong></p>
+    <div [innerHTML]="article.body"></div>
+
+    <p><strong>Last Modified:</strong> {{ article.update_date | date }}</p>
+    <p><strong>Last Modified By:</strong> {{ article.id_user }}</p>
+
+    <a [routerLink]="['/article-list']" class="btn btn-primary">Back to Main Page</a>
+    
+</div>
