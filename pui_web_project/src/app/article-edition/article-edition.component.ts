@@ -18,25 +18,9 @@ import { DummyServiceService } from '../services/dummy-service.service';
 })
 export class ArticleEditionComponent implements OnInit {
 
-  article: Article = {
-    id: 11,
-    id_user: 12,
-    abstract: "Short Abstract",
-    subtitle: " It is a subtitle",
-    body: " Count the body of the article in",
-    update_date: new Date(),
-    category: "Sports",
-    title: "The dark side of sports",
-    image_data: "url",
-    image_media_type: "something",
-    imageError: "",
-    isImageSaved: false,
-    cardImageBase64: "",
-
-  }
-    ;
+  articleObs!: Observable<Article>;
+  article!: Article;
   @ViewChild('articleForm') articleForm: any;
-  existingArticle!: Observable<Article>;
   user!: User | null;
   
   cardImageBase64!: string;
@@ -48,17 +32,18 @@ export class ArticleEditionComponent implements OnInit {
 
   constructor(private newsService: NewsService,
     private loginService: LoginService,
-    private dummyService: DummyServiceService,
     private route: ActivatedRoute,
     private location: Location,
-    private router: Router) { }
+    ) { }
 
   ngOnInit(): void {
     this.id = this.route.snapshot.paramMap.get('id');
 
     if (this.id != null) {
-      this.article.id = parseInt(this.id);
-      this.article = this.dummyService.getArticle(this.article.id);
+      this.articleObs = this.newsService.getArticle(parseInt(this.id));
+      this.articleObs.subscribe((article)=>{
+        this.article = article;
+      })
     }else{
       // new article
     }
@@ -76,9 +61,6 @@ export class ArticleEditionComponent implements OnInit {
     }
   }
 
-  getID() {
-    this.article.id = Math.random();
-  }
 
   saveArticle() {
     this.setDate();
@@ -95,18 +77,13 @@ export class ArticleEditionComponent implements OnInit {
 
     } else {
       //new article
-      this.getID();
       this.newsService.createArticle(this.article);
       
     }
-
     window.alert("The article" + this.article.title + "has been saved succesfully!");
   }
 
-  clearForm() {
-    this.articleForm.reset();
-  }
-
+  
   fileChangeEvent(fileInput: any) {
     this.imageError = null;
     if (fileInput.target.files && fileInput.target.files[0]) {
@@ -144,6 +121,11 @@ export class ArticleEditionComponent implements OnInit {
   }
 
 
+  clearForm() {
+    this.articleForm.reset();
+  }
 
-
+  back(){
+    this.location.back();
+  }
 }

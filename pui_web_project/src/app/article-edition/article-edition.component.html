@@ -41,8 +41,9 @@
             <div class="form-group col-md-4">
                 <!--Thumbnail-->
                 <h4>Thumbnail: </h4>
-                <input type="file" class="form-control" (change)="fileChangeEvent(article.image_data)"[(ngModel)]="article.image_data" name="artImage"
-                    #artImage="ngModel">
+                <img [src]="'data:' + article.image_media_type + ';base64,' + article.image_data ">
+                <input type="file" class="form-control" (change)="fileChangeEvent(article.image_data)"
+                    [(ngModel)]="article.image_data" name="artImage" #artImage="ngModel">
             </div>
         </div>
         <br>
@@ -54,7 +55,8 @@
                     #artAbstract="ngModel" [ngClass]="artAbstract.valid ? 'ng-valid.required': 'ng-invalid.required'">
 
                 <div class="alert alert-danger" *ngIf="!artAbstract.valid">
-                    <div *ngIf="artAbstract.errors && artAbstract.errors['required']">Please provide an abstract for the article.
+                    <div *ngIf="artAbstract.errors && artAbstract.errors['required']">Please provide an abstract for the
+                        article.
                     </div>
                 </div>
             </div>
@@ -72,6 +74,7 @@
         <br>
         <div class="row">
             <div class="form-group col-md-2">
+                <button class="btn btn-primary btn-sm mr-1" type="button" (click)="back()">Back</button>
                 <button class="btn btn-primary btn-sm mr-1" type="button" (click)="clearForm()">Clear</button>
             </div>
             <div class="form-group col-md-2">
