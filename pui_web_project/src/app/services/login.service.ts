@@ -31,7 +31,6 @@ export class LoginService {
     const usereq = new HttpParams()
       .set('username', name)
       .set('passwd', pwd);
-
     return this.http.post<User>(this.loginUrl, usereq).pipe(
       tap(user => {
         this.user = user;

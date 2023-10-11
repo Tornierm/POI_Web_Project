@@ -3,6 +3,12 @@ import { Component } from '@angular/core';
 import { Article } from '../interfaces/article';
 import { User } from '../interfaces/user';
 import { DummyServiceService } from '../services/dummy-service.service';
+import { ActivatedRoute } from '@angular/router';
+import { Category } from '../enums/enums';
+import { LoginService } from '../services/login.service';
+import { NewsService } from '../services/news.service';
+import { Observable } from 'rxjs';
+import { DomSanitizer } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-article-list',
@@ -11,9 +17,64 @@ import { DummyServiceService } from '../services/dummy-service.service';
 })
 export class ArticleListComponent {
 
-  constructor(private newsService: DummyServiceService){}
+  Category: typeof Category = Category;
 
-  articles: Article[] = this.newsService.getArticles();
+  constructor(
+    private newsService: NewsService,
+    private loginService: LoginService,
+    private _sanitizer: DomSanitizer,
+  ){}
 
-  isLogged = this.newsService.isLogged()
+  ngOnInit(): void {
+    this.getArticles()
+    // Without subscription
+    //this.value = this.route.snapshot.paramMap.get('value'); 
+  }
+
+  articles: Article[] = [];
+
+  getArticles(){
+    this.newsService.getArticles().subscribe(
+      data => {
+        console.log(data)
+        this.articles = data
+      },
+      error => console.log(error),
+      () => console.log("process complete"),
+    )
+  }
+
+  searchTerm: string = "";
+
+  category: Category = Category.All;
+
+  setCategory(category: Category){
+    this.category = category;
+  }
+
+  loggedInUser: User | null = this.loginService.getUser();
+
+  isLogged: boolean = this.loginService.isLogged();
+
+  update(){
+    this.loggedInUser = this.loginService.getUser();
+    this.isLogged= this.loginService.isLogged();
+  }
+
+  tmpUser: User = {
+    id: 0,
+    username: "",
+    passwd: "",
+  };
+
+  login(){
+    this.loginService.login(this.tmpUser.username, this.tmpUser.passwd).subscribe()
+    this.update()
+  }
+
+  logout(){
+    this.loginService.logout()
+    this.update()
+  }
+
 }

@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { Injectable, WritableSignal, signal } from '@angular/core';
 import { UrlSerializer } from '@angular/router';
 import { Article } from '../interfaces/article';
 import { User } from '../interfaces/user';
@@ -24,27 +24,27 @@ export class DummyServiceService {
     passwd: "admin"
   }
 
-  user: User | null = null;
+  user: WritableSignal<User | null> = signal(null);
 
   login(username: string, passwd: string){
     if(username == "admin" && passwd == "admin"){
-      this.user = this.user1;
+      this.user.set(this.user1);
+      this.isLogged.set(true)
     }
     else {
-      this.user = null;
+      this.user.set(null);
     }
   }
 
-  isLogged() {
-    return this.user != null;
-  }
+  isLogged = signal(false)
 
   getUser() {
     return this.user;
   }
 
   logout() {
-    this.user = null;
+    this.user.set(null);
+    this.isLogged.set(false)
   }
 
   getArticles(): Article[] {
