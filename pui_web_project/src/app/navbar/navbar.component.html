@@ -1,0 +1,30 @@
+<!-- Filter section for the categories & free text -->
+<nav class="navbar navbar-expand-lg"> 
+    <div class="container-fluid">
+      <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+          <li class="nav-item">
+            <a class="nav-link active" href="#">All</a> <!-- Filter for all articles -->
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#">National</a> <!-- Filter for national articles -->
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#">International</a> <!-- Filter for international articles -->
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#">Sports</a> <!-- Filter for sport articles -->
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#" (click)="setCategory(Category.Economy)">Economy</a> <!-- Filter for economy articles -->
+          </li>
+        </ul>
+        <div class="d-flex">
+          <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search"> <!-- free text search for shown articles -->
+        </div>
+        <div *ngIf="isLogged"> <!-- display the create article button only if username is not empty-->
+          <button class="btn btn-primary">Create Article</button>    <!-- Contains a create article button -->
+        </div> 
+      </div>
+    </div>
+  </nav>

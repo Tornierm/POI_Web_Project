@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { Injectable, WritableSignal, signal } from '@angular/core';
 import { UrlSerializer } from '@angular/router';
 import { Article } from '../interfaces/article';
 import { User } from '../interfaces/user';
@@ -20,22 +20,34 @@ export class DummyServiceService {
   //   {id: 6, id_user: 1, abstract: "Abstarct 6", subtitle: "Subtitle 6", body: "Body artikel 6", update_date: new Date(), category: "Economy", title: "Titel 6", thumbnail_image: "???", thumbnail_media_type: "Type 1"},
   
 
-  user: User = {
+  user1: User = {
     id: 1,
     username: "admin",
     passwd: "admin"
   }
 
-  login(username: string, passwd: string): User{
-    if(username == this.user.username && passwd == this.user.passwd){
-      return this.user;
+  user: WritableSignal<User | null> = signal(null);
+
+  login(username: string, passwd: string){
+    if(username == "admin" && passwd == "admin"){
+      this.user.set(this.user1);
+      this.isLogged.set(true)
     }
     else {
-      let fakeUser: User = {id: 0, username: "", passwd: ""};
-      return fakeUser;
+      this.user.set(null);
     }
   }
 
+  isLogged = signal(false)
+
+  getUser() {
+    return this.user;
+  }
+
+  logout() {
+    this.user.set(null);
+    this.isLogged.set(false)
+  }
 
   getArticles(): Article[] {
     return this.articles;

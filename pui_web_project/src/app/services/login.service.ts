@@ -10,11 +10,11 @@ import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 
 export class LoginService {
 
-  private user!: User |null;
+  private user: User | null = null;
 
   private loginUrl = 'http://sanger.dia.fi.upm.es/pui-rest-news/login';
 
-  private message!: string;
+  private message: any;
 
   private httpOptions = {
     headers: new HttpHeaders()
@@ -31,7 +31,6 @@ export class LoginService {
     const usereq = new HttpParams()
       .set('username', name)
       .set('passwd', pwd);
-
     return this.http.post<User>(this.loginUrl, usereq).pipe(
       tap(user => {
         this.user = user;

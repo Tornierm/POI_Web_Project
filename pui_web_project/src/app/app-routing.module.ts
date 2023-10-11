@@ -6,7 +6,8 @@ import { ArticleListComponent } from './article-list/article-list.component';
 import { LoginComponent } from './login/login.component';
 
 const routes: Routes = [
-  {path:"", component: ArticleListComponent},
+  { path: '', redirectTo: '/article-list', pathMatch: 'full' },
+  {path:"article-list", component: ArticleListComponent},
   {path:"details", component: ArticleDetailsComponent},
   {path:"edit/:id", component: ArticleEditionComponent},
   {path:"login", component: LoginComponent},

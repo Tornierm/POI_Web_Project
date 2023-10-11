@@ -3,7 +3,7 @@ export interface Article {
     id_user: number,
     abstract: string,
     subtitle: string,
-    body: string,
+    body?: string,
     update_date: Date,
     category: string,
     title: string,
