@@ -9,8 +9,9 @@ const routes: Routes = [
   { path: '', redirectTo: '/article-list', pathMatch: 'full' },
   {path:"article-list", component: ArticleListComponent},
   {path:"details", component: ArticleDetailsComponent},
-  {path:"edit", component: ArticleEditionComponent},
-  {path:"login", component: LoginComponent}
+  {path:"edit/:id", component: ArticleEditionComponent},
+  {path:"login", component: LoginComponent},
+
 ];
 
 @NgModule({
