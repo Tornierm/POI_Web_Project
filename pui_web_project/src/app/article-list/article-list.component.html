@@ -1,111 +1,127 @@
 <html>
-  <head>
-    <!-- Styles are needed to create the article view correctly. if not there is a line break after every article -->
-    <style>
 
-      .card-columns {
-          column-count: 3;
-      }
+<head>
+  <!-- Styles are needed to create the article view correctly. if not there is a line break after every article -->
+  <style>
+    .card-columns {
+      column-count: 3;
+    }
 
-      .card-columns .card {
-          column-break-inside: avoid;
-          display: inline-block;
-          width: 100%;
-      }
-    </style>
-  </head>
+    .card-columns .card {
+      /*column-break-inside: avoid;*/
+      display: inline-block;
+      width: 100%;
+    }
+  </style>
+</head>
 
-  <body>
-    <div class="container">
-      <!-- Header EIT-Newspaper-->
-      <div>
-          <h2 class="text-center title">EIT-Newspaper</h2> <!-- Header of the page -->
-      </div>
+<body>
+  <div class="container">
+    <!-- Header EIT-Newspaper-->
+    <div>
+      <h2 class="text-center title">EIT-Newspaper</h2> <!-- Header of the page -->
+    </div>
 
 
-      <!-- Login Form with username, password and a primary login button -->
-        <div *ngIf="!isLogged; else elseBlock">
-          <form>
-              <div class="row justify-content-end">
-                  <div class="col-2">
-                  <input type="text" class="form-control" placeholder="Username" [(ngModel)]="tmpUser.username" name="something"> <!--Input for username-->
-                  </div>
-                  <div class="col-2">
-                  <input type="password" class="form-control" placeholder="Password" [(ngModel)]="tmpUser.passwd" name="something"> <!--Input for password-->
-                  </div>
-                  <div class="col-1">
-                  <button class="btn btn-primary" type="submit" (click)="login()">Log In</button> <!-- Primary button to send the login data-->
-                  </div>
-              </div>
-          </form>
-          <!-- Welcome message + Username and sign out button -->
-        </div>
 
-        <ng-template #elseBlock>
-        <div class="row justify-content-end" *ngIf="loggedInUser !== null"> 
+    <!-- Login Form with username, password and a primary login button -->
+    <div *ngIf="!isLogged; else elseBlock">
+      <form>
+        <div class="row justify-content-end">
           <div class="col-2">
-              <p class="text-end"> Welcome {{loggedInUser.username}}</p> 
+            <input type="text" class="form-control" placeholder="Username" [(ngModel)]="tmpUser.username"
+              name="something"> <!--Input for username-->
+          </div>
+          <div class="col-2">
+            <input type="password" class="form-control" placeholder="Password" [(ngModel)]="tmpUser.passwd"
+              name="something"> <!--Input for password-->
           </div>
           <div class="col-1">
-              <button class="btn btn-primary" (click)="logout()">Log Out</button> 
-          </div>
-          </div>
-        </ng-template>
-      
-      <!-- Filter section for the categories & free text -->
-      <nav class="navbar navbar-expand-lg"> 
-        <div class="container-fluid">
-          <div class="collapse navbar-collapse" id="navbarSupportedContent">
-            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-              <li class="nav-item">
-                <button class="nav-link" (click)="setCategory(Category.All)">All</button> <!-- Filter for all articles -->
-              </li>
-              <li class="nav-item">
-                <button class="nav-link" ((ngclass))="category===Category.National ? 'active' : '' " href="#" (click)="setCategory(Category.National)">National</button> <!-- Filter for national articles -->
-              </li>
-              <li class="nav-item">
-                <button class="nav-link" href="#" (click)="setCategory(Category.International)">International</button> <!-- Filter for international articles -->
-              </li>
-              <li class="nav-item">
-                <button class="nav-link" href="#" (click)="setCategory(Category.Sports)">Sports</button> <!-- Filter for sport articles -->
-              </li>
-              <li class="nav-item">
-                <button class="nav-link" href="#" (click)="setCategory(Category.Economy)">Economy</button> <!-- Filter for economy articles -->
-              </li>
-              <li class="nav-item">
-                <button class="nav-link" href="#" (click)="setCategory(Category.Technology)">Technology</button> <!-- Filter for economy articles -->
-              </li>
-            </ul>
-            <div class="d-flex">
-              <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search" [(ngModel)]="searchTerm" > <!-- free text search for shown articles -->
-            </div>
-            <div *ngIf="isLogged"> <!-- display the create article button only if username is not empty-->
-              <button class="btn btn-primary">Create Article</button>    <!-- Contains a create article button -->
-            </div> 
+            <button class="btn btn-primary" type="submit" (click)="login()">Log In</button>
+            <!-- Primary button to send the login data-->
           </div>
         </div>
-      </nav>
-      <!-- Cards for articles including title, subtitle, image & abstracts -->
-      <div class="card-columns">
-        <div class="card" *ngFor="let article of articles | category:category | search:searchTerm"> <!-- Iterate over the articles to display all of them -->
-          <img class="card-img-top" src="{{'data:image/jpg;base64,' + article.thumbnail_image}}" alt="Card image cap" [routerLink]="['/details', article.id]"> <!--Added to link to specific article details-->
-          <div class="card-body">
-            <a [routerLink]="['/details', article.id]"> <!--Added to link to specific article details-->
-              <h4 class="card-title text-center">{{article.title}}</h4> <!-- Title of the article-->
-            </a>
-            <h5 class="text-center">{{article.subtitle}}</h5> <!-- Subtitle of the article-->
-            <p class="card-text text-center">{{article.abstract}}</p> <!-- Abstract of the article-->
-            <div class="row justify-content-end" *ngIf="isLogged"> <!-- Display the edit & delete buttons only if username is empty-->
-              <button class=" col-3 btn btn-primary">Edit</button> <!-- Cards contain buttons to edit articles -->
-              <button class=" col-3 btn btn-danger">Delete</button> <!-- Cards contain buttons to delete articles -->
-            </div>
+      </form>
+      <!-- Welcome message + Username and sign out button -->
+    </div>
+
+    <ng-template #elseBlock>
+      <div class="row justify-content-end" *ngIf="loggedInUser !== null">
+        <div class="col-2">
+          <p class="text-end"> Welcome {{loggedInUser.username}}</p>
+        </div>
+        <div class="col-1">
+          <button class="btn btn-primary" (click)="logout()">Log Out</button>
+        </div>
+      </div>
+    </ng-template>
+
+    <!-- Filter section for the categories & free text -->
+    <nav class="navbar navbar-expand-lg">
+      <div class="container-fluid">
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+          <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+            <li class="nav-item">
+              <button class="nav-link" (click)="setCategory(Category.All)">All</button> <!-- Filter for all articles -->
+            </li>
+            <li class="nav-item">
+              <button class="nav-link" ((ngclass))="category===Category.National ? 'active' : '' " href="#"
+                (click)="setCategory(Category.National)">National</button> <!-- Filter for national articles -->
+            </li>
+            <li class="nav-item">
+              <button class="nav-link" href="#" (click)="setCategory(Category.International)">International</button>
+              <!-- Filter for international articles -->
+            </li>
+            <li class="nav-item">
+              <button class="nav-link" href="#" (click)="setCategory(Category.Sports)">Sports</button>
+              <!-- Filter for sport articles -->
+            </li>
+            <li class="nav-item">
+              <button class="nav-link" href="#" (click)="setCategory(Category.Economy)">Economy</button>
+              <!-- Filter for economy articles -->
+            </li>
+            <li class="nav-item">
+              <button class="nav-link" href="#" (click)="setCategory(Category.Technology)">Technology</button>
+              <!-- Filter for economy articles -->
+            </li>
+          </ul>
+          <div class="d-flex">
+            <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search"
+              [(ngModel)]="searchTerm"> <!-- free text search for shown articles -->
+          </div>
+          <div *ngIf="isLogged"> <!-- display the create article button only if username is not empty-->
+            <button class="btn btn-primary" (click)="newArticle()">Create Article</button>
+            <!-- Contains a create article button -->
           </div>
         </div>
       </div>
-        
-
+    </nav>
+    <!-- Cards for articles including title, subtitle, image & abstracts -->
+    <div class="card-columns">
+      <div class="card" *ngFor="let article of articles | category:category | search:searchTerm">
+        <!-- Iterate over the articles to display all of them -->
+        <!-- <img class="card-img-top" [src]="'data:' + article.thumbnail_media_type + ';base64,' + article.thumbnail_image " alt="Card image cap"> -->
+        <img class="card-img-top" src="{{'data:image/jpg;base64,' + article.thumbnail_image}}" alt="Card image cap" [routerLink]="['/details', article.id]">
+        <div class="card-body">
+          <a [routerLink]="['/details', article.id]"> <!--Added to link to specific article details-->
+              <h4 class="card-title text-center">{{article.title}}</h4> <!-- Title of the article-->
+            </a>
+          <h5 class="text-center">{{article.subtitle}}</h5> <!-- Subtitle of the article-->
+          <p class="card-text text-center">{{article.abstract}}</p> <!-- Abstract of the article-->
+          <div class="row justify-content-end" *ngIf="isLogged">
+            <!-- Display the edit & delete buttons only if username is empty-->
+            <button class=" col-3 btn btn-primary" (click)="editArticle(article.id)">Edit</button>
+            <!-- Cards contain buttons to edit articles -->
+            <button class=" col-3 btn btn-danger" (click)="deleteArticle(article.id)">Delete</button>
+            <!-- Cards contain buttons to delete articles -->
+          </div>
+        </div>
+      </div>
     </div>
-    
-  </body>
-</html>
 
+
+  </div>
+
+</body>
+
+</html>

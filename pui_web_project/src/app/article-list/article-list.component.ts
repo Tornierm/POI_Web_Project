@@ -1,9 +1,9 @@
 import { JsonPipe } from '@angular/common';
 import { Component } from '@angular/core';
+import { ActivatedRoute, Router, NavigationExtras } from '@angular/router';
 import { Article } from '../interfaces/article';
 import { User } from '../interfaces/user';
 import { DummyServiceService } from '../services/dummy-service.service';
-import { ActivatedRoute } from '@angular/router';
 import { Category } from '../enums/enums';
 import { LoginService } from '../services/login.service';
 import { NewsService } from '../services/news.service';
@@ -23,6 +23,7 @@ export class ArticleListComponent {
     private newsService: NewsService,
     private loginService: LoginService,
     private _sanitizer: DomSanitizer,
+    private router: Router
   ){}
 
   ngOnInit(): void {
@@ -31,7 +32,7 @@ export class ArticleListComponent {
     //this.value = this.route.snapshot.paramMap.get('value'); 
   }
 
-  articles: Article[] = [];
+  articles: Article [] = [];
 
   getArticles(){
     this.newsService.getArticles().subscribe(
@@ -42,6 +43,18 @@ export class ArticleListComponent {
       error => console.log(error),
       () => console.log("process complete"),
     )
+  }
+
+  newArticle(){
+    this.router.navigate([`/edit/${null}`, {}]);
+  }
+
+  editArticle(id: number){
+    this.router.navigate([`/edit/${id}`, {}]);
+  }
+
+  deleteArticle(id: number){
+    this.newsService.deleteArticle(id);
   }
 
   searchTerm: string = "";
@@ -62,7 +75,11 @@ export class ArticleListComponent {
   }
 
   tmpUser: User = {
-    id: 0,
+    Authorization: "",
+    apikey: "",
+    expires: "",
+    group: 0,
+    user: 0,
     username: "",
     passwd: "",
   };
