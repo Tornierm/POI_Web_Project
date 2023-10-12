@@ -3,14 +3,69 @@
 <head>
   <!-- Styles are needed to create the article view correctly. if not there is a line break after every article -->
   <style>
-    .card-columns {
-      column-count: 3;
+    .login-container{
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-end;
+      gap:16px;
     }
-
+    .card-columns {
+      column-count: 1;
+      gap: 16px;
+    }
     .card-columns .card {
       /*column-break-inside: avoid;*/
       display: inline-block;
       width: 100%;
+    }
+    .navbar-nav{
+      display:flex;
+      flex-wrap: wrap;
+      flex-direction: row;
+      gap: 16px;
+      
+    }
+    .navbar{
+      justify-content: center;
+      border-top: 1px solid lightgrey;
+      border-bottom: 1px solid lightgrey;
+      margin: 8px 0;
+      padding: 8px;
+    }
+    .createButton{
+      padding: 16px 0;
+      display: flex;
+      justify-content: flex-end;
+    }
+    .search{
+      justify-self: flex-end;
+      max-width: 500px;
+    }
+    .card{
+      margin-top:12px;
+    }
+    .card a{
+      text-decoration: none;
+    }
+    .card a h4{
+      color:black;
+      font-size: 32px;
+    }
+    @media (min-width: 800px) { 
+      .card-columns {
+        column-count: 2;
+      }
+      .login-container{
+        flex-direction: row;
+      }
+    }
+    @media (min-width: 1200px) { 
+      .card-columns {
+        column-count: 3;
+      }
+      .navbar{
+        justify-content: space-between;
+      }
     }
   </style>
 </head>
@@ -19,48 +74,39 @@
   <div class="container">
     <!-- Header EIT-Newspaper-->
     <div>
-      <h2 class="text-center title">EIT-Newspaper</h2> <!-- Header of the page -->
+      <h2 class="text-center title">Eit-Digital-Times</h2> <!-- Header of the page -->
     </div>
-
-
 
     <!-- Login Form with username, password and a primary login button -->
-    <div *ngIf="!isLogged; else elseBlock">
-      <form>
-        <div class="row justify-content-end">
-          <div class="col-2">
-            <input type="text" class="form-control" placeholder="Username" [(ngModel)]="tmpUser.username"
-              name="something"> <!--Input for username-->
-          </div>
-          <div class="col-2">
-            <input type="password" class="form-control" placeholder="Password" [(ngModel)]="tmpUser.passwd"
-              name="something"> <!--Input for password-->
-          </div>
-          <div class="col-1">
+    <div>
+      <div *ngIf="!isLogged; else elseBlock">
+        <form>
+          <div class="login-container">
+            <div>
+              <input type="text" class="form-control" placeholder="Username" [(ngModel)]="tmpUser.username"
+                name="something"> <!--Input for username-->
+            </div>
+            <div>
+              <input type="password" class="form-control" placeholder="Password" [(ngModel)]="tmpUser.passwd"
+                name="something"> <!--Input for password-->
+            </div>
             <button class="btn btn-primary" type="submit" (click)="login()">Log In</button>
-            <!-- Primary button to send the login data-->
           </div>
-        </div>
-      </form>
-      <!-- Welcome message + Username and sign out button -->
-    </div>
+        </form>
+        <!-- Welcome message + Username and sign out button -->
+      </div>
 
-    <ng-template #elseBlock>
-      <div class="row justify-content-end" *ngIf="loggedInUser !== null">
-        <div class="col-2">
+      <ng-template #elseBlock>
+        <div class="login-container" *ngIf="loggedInUser !== null">
           <p class="text-end"> Welcome {{loggedInUser.username}}</p>
-        </div>
-        <div class="col-1">
           <button class="btn btn-primary" (click)="logout()">Log Out</button>
         </div>
-      </div>
-    </ng-template>
+      </ng-template>
+    </div>
 
     <!-- Filter section for the categories & free text -->
-    <nav class="navbar navbar-expand-lg">
-      <div class="container-fluid">
-        <div class="collapse navbar-collapse" id="navbarSupportedContent">
-          <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+    <nav class="navbar">
+          <ul class="navbar-nav">
             <li class="nav-item">
               <button class="nav-link" (click)="setCategory(Category.All)">All</button> <!-- Filter for all articles -->
             </li>
@@ -69,33 +115,29 @@
                 (click)="setCategory(Category.National)">National</button> <!-- Filter for national articles -->
             </li>
             <li class="nav-item">
-              <button class="nav-link" href="#" (click)="setCategory(Category.International)">International</button>
+              <button class="nav-link" (click)="setCategory(Category.International)">International</button>
               <!-- Filter for international articles -->
             </li>
             <li class="nav-item">
-              <button class="nav-link" href="#" (click)="setCategory(Category.Sports)">Sports</button>
+              <button class="nav-link" (click)="setCategory(Category.Sports)">Sports</button>
               <!-- Filter for sport articles -->
             </li>
             <li class="nav-item">
-              <button class="nav-link" href="#" (click)="setCategory(Category.Economy)">Economy</button>
+              <button class="nav-link" (click)="setCategory(Category.Economy)">Economy</button>
               <!-- Filter for economy articles -->
             </li>
             <li class="nav-item">
-              <button class="nav-link" href="#" (click)="setCategory(Category.Technology)">Technology</button>
+              <button class="nav-link" (click)="setCategory(Category.Technology)">Technology</button>
               <!-- Filter for economy articles -->
             </li>
           </ul>
-          <div class="d-flex">
-            <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search"
-              [(ngModel)]="searchTerm"> <!-- free text search for shown articles -->
-          </div>
-          <div *ngIf="isLogged"> <!-- display the create article button only if username is not empty-->
-            <button class="btn btn-primary" (click)="newArticle()">Create Article</button>
             <!-- Contains a create article button -->
-          </div>
-        </div>
-      </div>
+          <input class="form-control search" type="search" placeholder="Search" aria-label="Search" [(ngModel)]="searchTerm"> <!-- free text search for shown articles -->
     </nav>
+    <!--  -->
+    <div *ngIf="isLogged" class="createButton">
+      <button  class="btn btn-primary" (click)="newArticle()">Create Article</button>
+    </div>
     <!-- Cards for articles including title, subtitle, image & abstracts -->
     <div class="card-columns">
       <div class="card" *ngFor="let article of articles | category:category | search:searchTerm">
@@ -104,8 +146,8 @@
         <img class="card-img-top" src="{{'data:image/jpg;base64,' + article.thumbnail_image}}" alt="Card image cap" [routerLink]="['/details', article.id]">
         <div class="card-body">
           <a [routerLink]="['/details', article.id]"> <!--Added to link to specific article details-->
-              <h4 class="card-title text-center">{{article.title}}</h4> <!-- Title of the article-->
-            </a>
+            <h4 class="card-title text-center">{{article.title}}</h4> <!-- Title of the article-->
+          </a>
           <h5 class="text-center">{{article.subtitle}}</h5> <!-- Subtitle of the article-->
           <p class="card-text text-center">{{article.abstract}}</p> <!-- Abstract of the article-->
           <div class="row justify-content-end" *ngIf="isLogged">
@@ -118,8 +160,6 @@
         </div>
       </div>
     </div>
-
-
   </div>
 
 </body>
