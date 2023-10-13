@@ -2,7 +2,8 @@
     <h2>{{ article.title }}</h2>
     <h4>{{ article.subtitle }}</h4>
     <p><strong>Category: </strong> {{ article.category }}</p>
-    <p><strong>Abstract: <br></strong> {{ article.abstract }}</p>
+    <p><strong>Abstract: <br></strong></p>
+    <p [innerHTML]="article.abstract"></p>
 
     <!-- Display the article image if available, it doesn't work currently... 
     <div *ngIf="article.thumbnail_image && article.thumbnail_media_type">

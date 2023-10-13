@@ -149,7 +149,7 @@
             <h4 class="card-title text-center">{{article.title}}</h4> <!-- Title of the article-->
           </a>
           <h5 class="text-center">{{article.subtitle}}</h5> <!-- Subtitle of the article-->
-          <p class="card-text text-center">{{article.abstract}}</p> <!-- Abstract of the article-->
+          <p class="card-text text-center" [innerHTML]="article.abstract"></p> <!-- Abstract of the article-->
           <div class="row justify-content-end" *ngIf="isLogged">
             <!-- Display the edit & delete buttons only if username is empty-->
             <button class=" col-3 btn btn-primary" (click)="editArticle(article.id)">Edit</button>
