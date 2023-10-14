@@ -34,7 +34,7 @@ export class LoginService {
     return this.http.post<User>(this.loginUrl, usereq).pipe(
       tap(user => {
         this.user = user;
-      })
+      }) 
     );
   }
 

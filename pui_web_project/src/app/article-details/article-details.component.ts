@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { Article } from '../interfaces/article';
+import { Article, IndividualArticle } from '../interfaces/article';
 import { NewsService } from '../services/news.service';
 import { DummyServiceService } from '../services/dummy-service.service';
 
@@ -11,7 +11,7 @@ import { DummyServiceService } from '../services/dummy-service.service';
 })
 
 export class ArticleDetailsComponent implements OnInit {
-  article: Article | null = null;
+  article: IndividualArticle | null = null;
 
   constructor(
     private route: ActivatedRoute,
@@ -21,7 +21,6 @@ export class ArticleDetailsComponent implements OnInit {
   ngOnInit(): void {
     // Retrieve the article ID from the route parameter
     const idParam = this.route.snapshot.paramMap.get('id');
-    console.log(idParam)
     if (idParam !== null) {
       const articleId = parseInt(idParam); // Convert the ID to a number
   

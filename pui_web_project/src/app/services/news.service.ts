@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Article } from '../interfaces/article';
+import { Article, IndividualArticle } from '../interfaces/article';
 import { Observable, of } from 'rxjs';
 import { catchError, tap } from 'rxjs/operators';
 
@@ -34,7 +34,8 @@ export class NewsService {
     this.httpOptions = {
       headers: new HttpHeaders({
         'Content-Type': 'application/json',
-        Authorization: 'PUIRESTAUTH apikey=' + this.APIKEY
+        Authorization: 'PUIRESTAUTH apikey=' + this.APIKEY,
+        'Access-Control-Allow-Origin': '*',
       })
     };
     console.log('Apikey successfully changed ' + this.APIKEY);
@@ -60,7 +61,7 @@ export class NewsService {
   }
 
   deleteArticle(article: Article | number): Observable<Article> {
-    const id = typeof article === 'number' ? article : article.id;
+    const id = typeof article === "number" ? article : article.id;
     const url = `${this.articleUrl}/${id}`;
     return this.http.delete<Article>(url, this.httpOptions);
   }
@@ -78,21 +79,30 @@ export class NewsService {
   //  "image_media_type":...}
 
 
-  getArticle(id: number): Observable<Article> {
+  getArticle(id: number): Observable<IndividualArticle> {
     console.log('Requesting article id=' + id);
     const url = `${this.articleUrl}/${id}`;
-    return this.http.get<Article>(url, this.httpOptions);
+    let res = this.http.get<IndividualArticle>(url, this.httpOptions);
+    console.log(res.subscribe(
+      (data) => {
+        console.log(data)
+      }
+    ))
+    return res;
 
   }
 
-  updateArticle(article: Article): Observable<Article> {
+  updateArticle(article: IndividualArticle): Observable<IndividualArticle> {
     console.log('Updating article id=' + article.id);
-    return this.http.post<Article>(this.articleUrl, article, this.httpOptions);
+    console.log(article);
+    return this.http.post<IndividualArticle>(this.articleUrl, article, this.httpOptions);
   }
 
-  createArticle(article: Article): Observable<Article> {
-    console.log('Creating article');
+  createArticle(article: Partial<IndividualArticle>): Observable<IndividualArticle> {
+    console.log('Creating:');
     console.log(article);
-    return this.http.post<Article>(this.articleUrl, article, this.httpOptions);
+    let res = this.http.post<IndividualArticle>(this.articleUrl, article, this.httpOptions);
+    console.log(res)
+    return res;
   }
 }

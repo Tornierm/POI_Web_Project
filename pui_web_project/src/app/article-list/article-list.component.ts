@@ -7,8 +7,9 @@ import { DummyServiceService } from '../services/dummy-service.service';
 import { Category } from '../enums/enums';
 import { LoginService } from '../services/login.service';
 import { NewsService } from '../services/news.service';
-import { Observable } from 'rxjs';
+import { Observable, catchError } from 'rxjs';
 import { DomSanitizer } from '@angular/platform-browser';
+import { HttpErrorResponse } from '@angular/common/http';
 
 @Component({
   selector: 'app-article-list',
@@ -28,6 +29,15 @@ export class ArticleListComponent {
 
   ngOnInit(): void {
     this.getArticles()
+    const tmpUser = localStorage.getItem("user");
+    console.log(tmpUser? JSON.parse(tmpUser) : "not here")
+    if(tmpUser){
+      this.tmpUser = JSON.parse(tmpUser);
+      this.loggedInUser = this.tmpUser;
+      this.isLogged = true;
+      console.log(this.loggedInUser);
+      console.log(this.isLogged)
+    }
     // Without subscription
     //this.value = this.route.snapshot.paramMap.get('value'); 
   }
@@ -35,12 +45,12 @@ export class ArticleListComponent {
   articles: Article [] = [];
 
   getArticles(){
-    this.newsService.getArticles().subscribe(
+    this.newsService.getArticles().pipe(
+      catchError(this.handleError)
+    ).subscribe(
       data => {
-        console.log(data)
         this.articles = data
       },
-      error => console.log(error),
       () => console.log("process complete"),
     )
   }
@@ -54,7 +64,20 @@ export class ArticleListComponent {
   }
 
   deleteArticle(id: number){
-    this.newsService.deleteArticle(id);
+    this.newsService.deleteArticle(Number(id)).pipe(
+      catchError(this.handleError)
+    ).subscribe(
+      () => {
+        console.log("process complete"),
+        this.update()
+      }
+    )
+    
+  }
+
+  handleError(err: HttpErrorResponse): Observable<never>{
+    window.alert("An Error occured:" + err.message);
+    throw new Error('Method not implemented.');
   }
 
   searchTerm: string = "";
@@ -70,6 +93,7 @@ export class ArticleListComponent {
   isLogged: boolean = this.loginService.isLogged();
 
   update(){
+    this.getArticles();
     this.loggedInUser = this.loginService.getUser();
     this.isLogged= this.loginService.isLogged();
   }
@@ -85,12 +109,24 @@ export class ArticleListComponent {
   };
 
   login(){
-    this.loginService.login(this.tmpUser.username, this.tmpUser.passwd).subscribe()
-    this.update()
+    this.loginService.login(this.tmpUser.username, this.tmpUser.passwd).subscribe(
+      (data) => {
+        const UserString = JSON.stringify(data);
+        localStorage.setItem("user", UserString);
+        this.update()
+      },
+      (error) => {
+        this.handleError(error);
+      },
+      () => {
+        console.log("process completed");
+      }
+    )
   }
 
   logout(){
     this.loginService.logout()
+    localStorage.removeItem("user");
     this.update()
   }
 

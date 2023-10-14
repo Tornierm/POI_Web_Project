@@ -18,10 +18,16 @@
             <div class="form-group col-md-4">
                 <!--Thumbnail-->
                 <h4>Thumbnail: </h4>
-                <img style="width: 150px; height: 150px;" [src]="'data:' + article.thumbnail_media_type + ';base64,' + article.thumbnail_image ">
+                <img style="width: 150px; height: 150px;" [src]="'data:' + article.image_media_type + ';base64,' + article.image_data ">
                 <br>
-                <input type="file" class="form-control" (change)="fileChangeEvent($event)"
-                    [(ngModel)]="article.thumbnail_image" name="artImage" #artImage="ngModel">
+                <input 
+                    type="file" 
+                    class="form-control" 
+                    (change)="fileChangeEvent($event)"
+                    name="artImage" 
+                    #artImage="ngModel"
+                    [(ngModel)]="article.image_description"
+                >
             </div>
             <div class="form-group col-md-4">
                 <!--Category-->
