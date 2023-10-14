@@ -1,14 +1,14 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { ActivatedRoute, Router, NavigationExtras } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Location } from '@angular/common';
-import { Observable, of } from 'rxjs';
+import { Observable, catchError} from 'rxjs';
 import * as _ from 'lodash';
 
-import { Article } from '../interfaces/article';
+import { Article, IndividualArticle, convertArticle } from '../interfaces/article';
 import { User } from '../interfaces/user';
 import { NewsService } from '../services/news.service';
 import { LoginService } from '../services/login.service';
-import { DummyServiceService } from '../services/dummy-service.service';
+import { HttpErrorResponse } from '@angular/common/http';
 
 
 @Component({
@@ -18,8 +18,8 @@ import { DummyServiceService } from '../services/dummy-service.service';
 })
 export class ArticleEditionComponent implements OnInit {
 
-  articleObs!: Observable<Article>;
-  article: Article = {
+  articleObs!: Observable<IndividualArticle>;
+  article: IndividualArticle = {
     aut: 0,
     id: 0,
     id_user: 0,
@@ -29,8 +29,9 @@ export class ArticleEditionComponent implements OnInit {
     update_date: new Date(),
     category: "",
     title: "",
-    thumbnail_image: "", 
-    thumbnail_media_type: "",
+    image_data: "",
+    image_media_type: "",
+    image_description: "",
     is_deleted: 0,
     is_public: 0,
     username: ""
@@ -42,22 +43,29 @@ export class ArticleEditionComponent implements OnInit {
   isImageSaved!: boolean;
   imageError!: string |null;
 
-  id!: string | null;
+  id!: string;
 
 
   constructor(private newsService: NewsService,
     private loginService: LoginService,
+    private router: Router,
     private route: ActivatedRoute,
     private location: Location,
     ) { }
 
   ngOnInit(): void {
-    this.id = this.route.snapshot.paramMap.get('id');
-
-    if (this.id != null) {
+    const param = this.route.snapshot.paramMap.get('id');
+    if(param){
+      this.id = param;
+    } else {
+      this.id = "null";
+    }
+    if (this.id !== "null") {
       this.articleObs = this.newsService.getArticle(parseInt(this.id));
       this.articleObs.subscribe((article)=>{
         this.article = article;
+        console.log("article: ")
+        console.log(article)
       })
     }else{
       // new article
@@ -76,28 +84,63 @@ export class ArticleEditionComponent implements OnInit {
     }
   }
 
+  back(){
+    this.router.navigate([`/article-list`, {}]);
+  }
+
+  clearForm() {
+    this.articleForm.reset();
+  }
+
+  handleError(err: HttpErrorResponse): void{
+    window.alert("An Error occured:" + err.message);
+  }
 
   saveArticle() {
-    debugger
+
     this.setDate();
     this.getUser();
-
+    let newArticle;
 
     //check if article already exists
     if (this.article.id != 0) {
       //article exists
-      this.newsService.updateArticle(this.article);
+      newArticle = this.newsService.updateArticle(this.article).subscribe(
+        (data) => {
+          console.log(data);
+          window.alert("The article" + this.article.title + "has been saved succesfully!");
+          this.clearForm()
+          this.back()
+        },
+        (error) => {
+          this.handleError(error)
+        },
+        () => {
+          console.log("process completed");
+        }
+      )
 
     } else {
       //new article
-      this.newsService.createArticle(this.article);
-      
+      const tmp = convertArticle(this.article);
+      this.newsService.createArticle(tmp).subscribe(
+        (next) => {
+          console.log(next);
+          window.alert("The article" + this.article.title + "has been saved succesfully!");
+          this.clearForm()
+          this.back();
+        },
+        (error) => {
+          this.handleError(error);
+          this.back();
+        },
+        () => {
+          console.log("process completed");
+        }
+      )
     }
-    window.alert("The article" + this.article.title + "has been saved succesfully!");
-    this.location.back();
   }
 
-  
   fileChangeEvent(fileInput: any) {
     this.imageError = null;
     if (fileInput.target.files && fileInput.target.files[0]) {
@@ -123,23 +166,14 @@ export class ArticleEditionComponent implements OnInit {
           this.cardImageBase64 = imgBase64Path;
           this.isImageSaved = true;
 
-          this.article.thumbnail_media_type = fileInput.target.files[0].type;
-          const head = this.article.thumbnail_media_type.length + 13;
-          this.article.thumbnail_image = e.target.result.substring(head, e.target.result.length);
+          this.article.image_media_type = fileInput.target.files[0].type;
+          const head = this.article.image_media_type.length + 13;
+          this.article.image_data = e.target.result.substring(head, e.target.result.length);
 
         };
       };
       reader.readAsDataURL(fileInput.target.files[0]);
     }
     return true;
-  }
-
-
-  clearForm() {
-    this.articleForm.reset();
-  }
-
-  back(){
-    this.location.back();
   }
 }

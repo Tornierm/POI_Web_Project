@@ -13,7 +13,6 @@ export class LoginComponent implements OnInit {
     private loginService: DummyServiceService
   ){
     effect(() => {
-      console.log(this.loginService.isLogged())
       this.isLogged = this.loginService.isLogged()
     });  
   }
