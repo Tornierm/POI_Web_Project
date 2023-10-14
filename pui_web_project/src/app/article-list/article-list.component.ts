@@ -126,6 +126,7 @@ export class ArticleListComponent {
 
   logout(){
     this.loginService.logout()
+    localStorage.removeItem("user");
     this.update()
   }
 
