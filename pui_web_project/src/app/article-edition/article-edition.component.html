@@ -9,7 +9,7 @@
                 <input type="text" class="form-control" [(ngModel)]="article.title" name="artTitle" #artTitle="ngModel"
                     required [ngClass]="artTitle.valid ? 'ng-valid.required' : 'ng-invalid.required'">
 
-                <div class="alert alert-danger" *ngIf="!artTitle.valid">
+                <div class="alert alert-danger" *ngIf=" !artTitle.pristine && !artTitle.valid">
                     <div *ngIf="artTitle.errors && artTitle.errors['required']">Please provide a title for the article.
                     </div>
                 </div>
@@ -36,9 +36,9 @@
                     required [ngClass]="artCat.valid ? 'ng-valid.required' : 'ng-invalid.required'"
                     pattern="(National|International|Sports|Economy)">
 
-                <div class="alert alert-danger" *ngIf="!artCat.valid">
-                    <div *ngIf="artCat.errors && artCat.errors['required']">Please provide a category for the
-                        article.
+                <div class="alert alert-danger" *ngIf="!artCat.pristine && !artCat.valid">
+                    <div *ngIf="artCat.errors">Please provide a category for the
+                        article. (National|International|Sports|Economy)
                     </div>
                 </div>
             </div>
@@ -50,6 +50,11 @@
                 <h4>Subtitle: </h4>
                 <input type="text" required class="form-control" [(ngModel)]="article.subtitle" name="artSubtitle"
                     #artSubtitle="ngModel">
+                <div class="alert alert-danger" *ngIf="!artSubtitle.pristine &&  !artSubtitle.valid">
+                    <div *ngIf="artSubtitle.errors && artSubtitle.errors['required']">Please provide a subtitle for the
+                        article.
+                    </div>
+                </div>
             </div>
         </div>
         <br>
@@ -60,7 +65,7 @@
                 <input type="text" required class="form-control" [(ngModel)]="article.abstract" name="artAbstract"
                     #artAbstract="ngModel" [ngClass]="artAbstract.valid ? 'ng-valid.required': 'ng-invalid.required'">
 
-                <div class="alert alert-danger" *ngIf="!artAbstract.valid">
+                <div class="alert alert-danger" *ngIf="!artAbstract.pristine &&  !artAbstract.valid">
                     <div *ngIf="artAbstract.errors && artAbstract.errors['required']">Please provide an abstract for the
                         article.
                     </div>
