@@ -102,7 +102,6 @@ export class NewsService {
     console.log('Creating:');
     console.log(article);
     let res = this.http.post<IndividualArticle>(this.articleUrl, article, this.httpOptions);
-    console.log(res)
     return res;
   }
 }

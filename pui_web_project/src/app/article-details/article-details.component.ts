@@ -3,6 +3,8 @@ import { ActivatedRoute } from '@angular/router';
 import { Article, IndividualArticle } from '../interfaces/article';
 import { NewsService } from '../services/news.service';
 import { DummyServiceService } from '../services/dummy-service.service';
+import { User } from '../interfaces/user';
+import { HttpErrorResponse } from '@angular/common/http';
 
 @Component({
   selector: 'app-article-details',
@@ -12,11 +14,16 @@ import { DummyServiceService } from '../services/dummy-service.service';
 
 export class ArticleDetailsComponent implements OnInit {
   article: IndividualArticle | null = null;
+  user: User | null = null;
 
   constructor(
     private route: ActivatedRoute,
     private newsService: NewsService
   ) {}
+
+  handleError(err: HttpErrorResponse): void{
+    window.alert("An Error occured:" + err.message);
+  }
 
   ngOnInit(): void {
     // Retrieve the article ID from the route parameter
@@ -25,9 +32,17 @@ export class ArticleDetailsComponent implements OnInit {
       const articleId = parseInt(idParam); // Convert the ID to a number
   
       // Fetch article details based on the ID
-      this.newsService.getArticle(articleId).subscribe((article) => {
-        this.article = article;
-      });
+      this.newsService.getArticle(articleId).subscribe(
+        (article) => {
+          this.article = article;
+        },
+        (error) => {
+          this.handleError(error);
+        },
+        () => {
+          console.log("process completed");
+        }
+      );
     }
   }
 }
