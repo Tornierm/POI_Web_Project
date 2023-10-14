@@ -1,22 +1,24 @@
-<div *ngIf="article">
-    <h2>{{ article.title }}</h2>
-    <h4>{{ article.subtitle }}</h4>
-    <p><strong>Category: </strong> {{ article.category }}</p>
-    <p><strong>Abstract: <br></strong></p>
-    <p [innerHTML]="article.abstract"></p>
+<div class="grid" *ngIf="article">
+    <h2 class="title">{{ article.title }}</h2>
+    <h4 class="subtitle">{{ article.subtitle }}</h4>
+    <p class="abstract" [innerHTML]="article.abstract"></p>
 
-    <!-- Display the article image if available, it doesn't work currently... 
-    <div *ngIf="article.thumbnail_image && article.thumbnail_media_type">
-        <img [src]="'data:' + article.thumbnail_media_type + ';base64,' + article.thumbnail_image">
+    <img
+        class="image"
+        *ngIf="article.image_data && article.image_media_type"
+        [src]="'data:' + article.image_media_type + ';base64,' + article.image_data"
+    >
+
+    <div class="body" [innerHTML]="article.body"></div>
+    <div class="meta">
+        <p><strong>Last Modified:</strong> {{ article.update_date | date }}</p>
+        <p><strong>Last Modified By:</strong> {{ article.id_user }}</p>
+        <p class="category"><strong>Category: </strong> {{ article.category }}</p>
+
     </div>
-    -->
-
-    <p><strong>Body:</strong></p>
-    <div [innerHTML]="article.body"></div>
-
-    <p><strong>Last Modified:</strong> {{ article.update_date | date }}</p>
-    <p><strong>Last Modified By:</strong> {{ article.id_user }}</p>
-
-    <a [routerLink]="['/article-list']" class="btn btn-primary">Back to Main Page</a>
+    
+    <div class="back">
+        <a [routerLink]="['/article-list']" class="btn btn-primary">&lt; Back to Main Page</a>
+    </div>
     
 </div>

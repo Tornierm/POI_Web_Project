@@ -1,0 +1,96 @@
+.grid{
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    grid-template-areas: 
+        'back back'
+        'header header'
+        'title image'
+        'category image'
+        'subtitle image'
+        'abstract image'
+        'body body'
+        'buttons buttons'
+    ;
+    margin-right: auto;
+    margin-left: auto;
+    max-width: 800px;
+    gap: 24px;
+    padding:24px;
+}
+
+
+
+@media (max-width: 800px) { 
+    .grid{
+        grid-template-columns: repeat(1, 1fr);
+        grid-template-areas: 
+            'back'
+            'header'
+            'title'
+            'image'
+            'category'
+            'subtitle'
+            'abstract'
+            'body'
+            'buttons'
+        ;
+    }
+  }
+.back{
+    grid-area: back;
+    display:flex;
+    justify-content: flex-start;
+}
+.title{
+    grid-area: header;
+    display:flex;
+    justify-content: center;
+}
+.button-container{
+    grid-area: buttons;
+    display:flex;
+    gap:8px;
+    justify-content: flex-end;
+}
+
+.body-container{
+    grid-area: body;
+    width: 100%;
+}
+
+.textarea{
+    width: 100%;
+    min-height: 200px;
+}
+
+.abstract-container{
+    width: 100%;
+    grid-area: abstract;
+}
+
+.subtitle-container{
+    width: 100%;
+    grid-area: subtitle;
+}
+
+.category-container{
+    width: 100%;
+    grid-area: category;
+}
+
+.thumbnail-container{
+    width: 100%;
+    grid-area: image;
+}
+
+.image{
+    height: 300px;
+    width: 100%;
+    object-fit: cover;
+}
+
+.title-container{
+    width: 100%;
+    grid-area: title;
+}
+

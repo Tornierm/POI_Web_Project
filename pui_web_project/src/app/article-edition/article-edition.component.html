@@ -1,9 +1,15 @@
-<h2>Edit/Create Article</h2>
-<br>
+
+<div class="edit-container">
 <form #articleForm="ngForm" (ngSubmit)="saveArticle()">
-    <div class="container">
-        <div class="row">
-            <div class="form-group col-md-6">
+    <div class="container grid">
+        <div class="back">
+            <button class="btn btn-primary btn-sm mr-1" type="button" (click)="back()">&lt; Back to Main Page</button>
+        </div>
+        <div class="title">
+            <h2 *ngIf="this.id !== 'null'">Edit Article</h2>
+            <h2 *ngIf="this.id === 'null'">Create Article</h2>
+        </div>
+            <div class="form-group col-md-6 title-container">
                 <!--Title-->
                 <h4>Title: </h4>
                 <input type="text" class="form-control" [(ngModel)]="article.title" name="artTitle" #artTitle="ngModel"
@@ -14,11 +20,10 @@
                     </div>
                 </div>
             </div>
-            <div class="form-group col-md-2"></div>
-            <div class="form-group col-md-4">
+            <div class="form-group col-md-4 thumbnail-container">
                 <!--Thumbnail-->
                 <h4>Thumbnail: </h4>
-                <img style="width: 150px; height: 150px;" [src]="'data:' + article.image_media_type + ';base64,' + article.image_data ">
+                <img class="image" [src]="'data:' + article.image_media_type + ';base64,' + article.image_data ">
                 <br>
                 <input 
                     type="file" 
@@ -29,23 +34,31 @@
                     [(ngModel)]="article.image_description"
                 >
             </div>
-            <div class="form-group col-md-4">
+            <div class="form-group col-md-6 category-container">
                 <!--Category-->
                 <h4>Category: </h4>
-                <input type="text" class="form-control" [(ngModel)]="article.category" name="artCat" #artCat="ngModel"
+                <!-- <input type="text" class="form-control"  name="artCat" #artCat="ngModel"
                     required [ngClass]="artCat.valid ? 'ng-valid.required' : 'ng-invalid.required'"
-                    pattern="(National|International|Sports|Economy)">
-
+                    pattern="(National|International|Sports|Economy)"> -->
+                <select 
+                    name="category" id="category"
+                    [(ngModel)]="article.category"
+                    class="form-select"
+                    #artCat="ngModel"
+                    required [ngClass]="artCat.valid ? 'ng-valid.required' : 'ng-invalid.required'"
+                >
+                    <option value="volvo">National</option>
+                    <option value="saab">International</option>
+                    <option value="mercedes">Sports</option>
+                    <option value="audi">Economy</option>
+                </select>
                 <div class="alert alert-danger" *ngIf="!artCat.pristine && !artCat.valid">
                     <div *ngIf="artCat.errors">Please provide a category for the
                         article. (National|International|Sports|Economy)
                     </div>
                 </div>
             </div>
-        </div>
-        <br>
-        <div class="row">
-            <div class="form-group col-md-6">
+            <div class="form-group col-md-6 subtitle-container">
                 <!--Subtitle-->
                 <h4>Subtitle: </h4>
                 <input type="text" required class="form-control" [(ngModel)]="article.subtitle" name="artSubtitle"
@@ -56,10 +69,7 @@
                     </div>
                 </div>
             </div>
-        </div>
-        <br>
-        <div class="row">
-            <div class="form-group col-md-6">
+            <div class="form-group col-md-6 abstract-container">
                 <!--Abstract-->
                 <h4>Abstract: </h4>
                 <input type="text" required class="form-control" [(ngModel)]="article.abstract" name="artAbstract"
@@ -71,27 +81,19 @@
                     </div>
                 </div>
             </div>
-        </div>
-        <br>
-        <div class="row">
-            <div class="form-group col-md-6">
+            <div class="form-group col-md-6 body-container">
                 <!--Body-->
                 <h4>Body: </h4>
-                <textarea class="span10" rows="10" cols="87" [(ngModel)]="article.body" name="artBody"
+                <textarea class="textarea" [(ngModel)]="article.body" name="artBody"
                     #artBody="ngModel">
                 </textarea>
             </div>
-        </div>
-        <br>
-        <div class="row">
-            <div class="form-group col-md-2">
-                <button class="btn btn-primary btn-sm mr-1" type="button" (click)="back()">Back</button>
+            <div class="button-container">
                 <button class="btn btn-primary btn-sm mr-1" type="button" (click)="clearForm()">Clear</button>
-            </div>
-            <div class="form-group col-md-2">
                 <button class="btn btn-primary btn-sm mr-1" type="button" (click)="saveArticle()"
                     [disabled]="!articleForm.form.valid">Save</button>
-            </div>
-        </div>
+            </div>  
     </div>
+
 </form>
+</div>
