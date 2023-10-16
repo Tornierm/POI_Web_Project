@@ -83,13 +83,12 @@ export class NewsService {
     console.log('Requesting article id=' + id);
     const url = `${this.articleUrl}/${id}`;
     let res = this.http.get<IndividualArticle>(url, this.httpOptions);
-    console.log(res.subscribe(
-      (data) => {
-        console.log(data)
-      }
-    ))
+    // console.log(res.subscribe(
+    //   (data) => {
+    //     console.log(data)
+    //   }
+    // ))
     return res;
-
   }
 
   updateArticle(article: IndividualArticle): Observable<IndividualArticle> {

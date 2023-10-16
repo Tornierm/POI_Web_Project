@@ -47,10 +47,10 @@
                     #artCat="ngModel"
                     required [ngClass]="artCat.valid ? 'ng-valid.required' : 'ng-invalid.required'"
                 >
-                    <option value="volvo">National</option>
-                    <option value="saab">International</option>
-                    <option value="mercedes">Sports</option>
-                    <option value="audi">Economy</option>
+                    <option value="National">National</option>
+                    <option value="International">International</option>
+                    <option value="Sports">Sports</option>
+                    <option value="Economy">Economy</option>
                 </select>
                 <div class="alert alert-danger" *ngIf="!artCat.pristine && !artCat.valid">
                     <div *ngIf="artCat.errors">Please provide a category for the
