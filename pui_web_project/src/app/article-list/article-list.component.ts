@@ -1,5 +1,5 @@
 import { JsonPipe } from '@angular/common';
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router, NavigationExtras } from '@angular/router';
 import { Article } from '../interfaces/article';
 import { User } from '../interfaces/user';
@@ -10,21 +10,25 @@ import { NewsService } from '../services/news.service';
 import { Observable, catchError } from 'rxjs';
 import { DomSanitizer } from '@angular/platform-browser';
 import { HttpErrorResponse } from '@angular/common/http';
+import { MatDialog, MatDialogRef } from '@angular/material/dialog';
+import { ConfirmDialogComponent } from '../confirm-dialog/confirm-dialog.component';
+import { Dialog, DialogRef } from '@angular/cdk/dialog';
 
 @Component({
   selector: 'app-article-list',
   templateUrl: './article-list.component.html',
   styleUrls: ['./article-list.component.css']
 })
-export class ArticleListComponent {
+export class ArticleListComponent implements OnInit {
 
   Category: typeof Category = Category;
-
+  
   constructor(
     private newsService: NewsService,
     private loginService: LoginService,
     private _sanitizer: DomSanitizer,
-    private router: Router
+    private router: Router,
+    public dialog: MatDialog
   ){}
 
   ngOnInit(): void {
@@ -64,16 +68,25 @@ export class ArticleListComponent {
   }
 
   deleteArticle(id: number){
-    this.newsService.deleteArticle(Number(id)).pipe(
-      catchError(this.handleError)
-    ).subscribe(
-      () => {
-        console.log("process complete"),
-        this.update()
+    const dialogRef = this.dialog.open(ConfirmDialogComponent, {
+      data: { message: 'Are you sure you want to delete this article?' },
+    });
+  
+    dialogRef.afterClosed().subscribe((result) => {
+      if (result) {
+        this.newsService.deleteArticle(Number(id)).pipe(
+          catchError(this.handleError)
+        ).subscribe(
+          () => {
+            console.log("process complete"),
+            window.alert("This article has been deleted successfully."),
+            this.update()
+          }
+        )
       }
-    )
-    
+    }) 
   }
+
 
   handleError(err: HttpErrorResponse): Observable<never>{
     window.alert("An Error occured:" + err.message);

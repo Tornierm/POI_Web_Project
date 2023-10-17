@@ -3,67 +3,80 @@
 <head>
   <!-- Styles are needed to create the article view correctly. if not there is a line break after every article -->
   <style>
-    .login-container{
+    .login-container {
       display: flex;
       flex-direction: column;
       justify-content: flex-end;
-      gap:16px;
+      gap: 16px;
     }
+
     .card-columns {
       column-count: 1;
       gap: 16px;
     }
+
     .card-columns .card {
       /*column-break-inside: avoid;*/
       display: inline-block;
       width: 100%;
     }
-    .navbar-nav{
-      display:flex;
+
+    .navbar-nav {
+      display: flex;
       flex-wrap: wrap;
       flex-direction: row;
       gap: 16px;
-      
+
     }
-    .navbar{
+
+    .navbar {
       justify-content: center;
       border-top: 1px solid lightgrey;
       border-bottom: 1px solid lightgrey;
       margin: 8px 0;
       padding: 8px;
     }
-    .createButton{
+
+    .createButton {
       padding: 16px 0;
       display: flex;
       justify-content: flex-end;
     }
-    .search{
+
+    .search {
       justify-self: flex-end;
       max-width: 500px;
     }
-    .card{
-      margin-top:12px;
+
+    .card {
+      margin-top: 12px;
     }
-    .card a{
+
+    .card a {
       text-decoration: none;
     }
-    .card a h4{
-      color:black;
+
+    .card a h4 {
+      color: black;
       font-size: 32px;
     }
-    @media (min-width: 800px) { 
+
+    @media (min-width: 800px) {
       .card-columns {
         column-count: 2;
       }
-      .login-container{
+
+      .login-container {
         flex-direction: row;
       }
     }
-    @media (min-width: 1200px) { 
+
+    @media (min-width: 1200px) {
       .card-columns {
         column-count: 3;
       }
-      .navbar{
+
+      .navbar {
         justify-content: space-between;
       }
     }
@@ -106,44 +119,46 @@
 
     <!-- Filter section for the categories & free text -->
     <nav class="navbar">
-          <ul class="navbar-nav">
-            <li class="nav-item">
-              <button class="nav-link" (click)="setCategory(Category.All)">All</button> <!-- Filter for all articles -->
-            </li>
-            <li class="nav-item">
-              <button class="nav-link" ((ngclass))="category===Category.National ? 'active' : '' " href="#"
-                (click)="setCategory(Category.National)">National</button> <!-- Filter for national articles -->
-            </li>
-            <li class="nav-item">
-              <button class="nav-link" (click)="setCategory(Category.International)">International</button>
-              <!-- Filter for international articles -->
-            </li>
-            <li class="nav-item">
-              <button class="nav-link" (click)="setCategory(Category.Sports)">Sports</button>
-              <!-- Filter for sport articles -->
-            </li>
-            <li class="nav-item">
-              <button class="nav-link" (click)="setCategory(Category.Economy)">Economy</button>
-              <!-- Filter for economy articles -->
-            </li>
-            <li class="nav-item">
-              <button class="nav-link" (click)="setCategory(Category.Technology)">Technology</button>
-              <!-- Filter for economy articles -->
-            </li>
-          </ul>
-            <!-- Contains a create article button -->
-          <input class="form-control search" type="search" placeholder="Search" aria-label="Search" [(ngModel)]="searchTerm"> <!-- free text search for shown articles -->
+      <ul class="navbar-nav">
+        <li class="nav-item">
+          <button class="nav-link" (click)="setCategory(Category.All)">All</button> <!-- Filter for all articles -->
+        </li>
+        <li class="nav-item">
+          <button class="nav-link" ((ngclass))="category===Category.National ? 'active' : '' " href="#"
+            (click)="setCategory(Category.National)">National</button> <!-- Filter for national articles -->
+        </li>
+        <li class="nav-item">
+          <button class="nav-link" (click)="setCategory(Category.International)">International</button>
+          <!-- Filter for international articles -->
+        </li>
+        <li class="nav-item">
+          <button class="nav-link" (click)="setCategory(Category.Sports)">Sports</button>
+          <!-- Filter for sport articles -->
+        </li>
+        <li class="nav-item">
+          <button class="nav-link" (click)="setCategory(Category.Economy)">Economy</button>
+          <!-- Filter for economy articles -->
+        </li>
+        <li class="nav-item">
+          <button class="nav-link" (click)="setCategory(Category.Technology)">Technology</button>
+          <!-- Filter for economy articles -->
+        </li>
+      </ul>
+      <!-- Contains a create article button -->
+      <input class="form-control search" type="search" placeholder="Search" aria-label="Search"
+        [(ngModel)]="searchTerm"> <!-- free text search for shown articles -->
     </nav>
     <!--  -->
     <div *ngIf="isLogged" class="createButton">
-      <button  class="btn btn-primary" (click)="newArticle()">Create Article</button>
+      <button class="btn btn-primary" (click)="newArticle()">Create Article</button>
     </div>
     <!-- Cards for articles including title, subtitle, image & abstracts -->
     <div class="card-columns">
       <div class="card" *ngFor="let article of articles | category:category | search:searchTerm">
         <!-- Iterate over the articles to display all of them -->
         <!-- <img class="card-img-top" [src]="'data:' + article.thumbnail_media_type + ';base64,' + article.thumbnail_image " alt="Card image cap"> -->
-        <img class="card-img-top" src="{{'data:image/jpg;base64,' + article.thumbnail_image}}" alt="Card image cap" [routerLink]="['/details', article.id]">
+        <img class="card-img-top" src="{{'data:image/jpg;base64,' + article.thumbnail_image}}" alt="Card image cap"
+          [routerLink]="['/details', article.id]">
         <div class="card-body">
           <a [routerLink]="['/details', article.id]"> <!--Added to link to specific article details-->
             <h4 class="card-title text-center">{{article.title}}</h4> <!-- Title of the article-->
@@ -154,13 +169,15 @@
             <!-- Display the edit & delete buttons only if username is empty-->
             <button class=" col-3 btn btn-primary" (click)="editArticle(article.id)">Edit</button>
             <!-- Cards contain buttons to edit articles -->
-            <button class=" col-3 btn btn-danger" (click)="deleteArticle(article.id)">Delete</button>
+            <button class=" col-3 btn btn-danger" name="deleteArticle" (click)="deleteArticle(article.id)">Delete</button>
             <!-- Cards contain buttons to delete articles -->
           </div>
         </div>
       </div>
     </div>
   </div>
+
+
 
 </body>
 
