@@ -33,7 +33,7 @@
                     #artImage="ngModel"
                     [(ngModel)]="article.image_description"
                 >
-                <div class="alert alert-danger" *ngIf="!isThumbnailValid()">
+                <div class="alert alert-danger" *ngIf="this.id === 'null' && !isThumbnailValid()">
                     Please select a thumbnail image.
                   </div>
             </div>
