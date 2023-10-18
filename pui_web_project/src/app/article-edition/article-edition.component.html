@@ -11,9 +11,9 @@
         </div>
             <div class="form-group col-md-6 title-container">
                 <!--Title-->
-                <h4>Title: </h4>
+                <h4>Title:* </h4>
                 <input type="text" class="form-control" [(ngModel)]="article.title" name="artTitle" #artTitle="ngModel"
-                    required [ngClass]="artTitle.valid ? 'ng-valid.required' : 'ng-invalid.required'">
+                    required [ngClass]="{'ng-valid': artTitle.valid, 'ng-invalid': !artTitle.valid}">
 
                 <div class="alert alert-danger" *ngIf=" !artTitle.pristine && !artTitle.valid">
                     <div *ngIf="artTitle.errors && artTitle.errors['required']">Please provide a title for the article.
@@ -22,7 +22,7 @@
             </div>
             <div class="form-group col-md-4 thumbnail-container">
                 <!--Thumbnail-->
-                <h4>Thumbnail: </h4>
+                <h4>Thumbnail:* </h4>
                 <img class="image" [src]="'data:' + article.image_media_type + ';base64,' + article.image_data ">
                 <br>
                 <input 
@@ -33,10 +33,13 @@
                     #artImage="ngModel"
                     [(ngModel)]="article.image_description"
                 >
+                <div class="alert alert-danger" *ngIf="!isThumbnailValid()">
+                    Please select a thumbnail image.
+                  </div>
             </div>
             <div class="form-group col-md-6 category-container">
                 <!--Category-->
-                <h4>Category: </h4>
+                <h4>Category:* </h4>
                 <!-- <input type="text" class="form-control"  name="artCat" #artCat="ngModel"
                     required [ngClass]="artCat.valid ? 'ng-valid.required' : 'ng-invalid.required'"
                     pattern="(National|International|Sports|Economy)"> -->
@@ -45,7 +48,7 @@
                     [(ngModel)]="article.category"
                     class="form-select"
                     #artCat="ngModel"
-                    required [ngClass]="artCat.valid ? 'ng-valid.required' : 'ng-invalid.required'"
+                    required [ngClass]="{'ng-valid': artCat.valid, 'ng-invalid': !artCat.valid}">
                 >
                     <option value="volvo">National</option>
                     <option value="saab">International</option>
@@ -60,9 +63,9 @@
             </div>
             <div class="form-group col-md-6 subtitle-container">
                 <!--Subtitle-->
-                <h4>Subtitle: </h4>
+                <h4>Subtitle:* </h4>
                 <input type="text" required class="form-control" [(ngModel)]="article.subtitle" name="artSubtitle"
-                    #artSubtitle="ngModel">
+                #artSubtitle="ngModel">
                 <div class="alert alert-danger" *ngIf="!artSubtitle.pristine &&  !artSubtitle.valid">
                     <div *ngIf="artSubtitle.errors && artSubtitle.errors['required']">Please provide a subtitle for the
                         article.
@@ -71,9 +74,9 @@
             </div>
             <div class="form-group col-md-6 abstract-container">
                 <!--Abstract-->
-                <h4>Abstract: </h4>
+                <h4>Abstract:* </h4>
                 <input type="text" required class="form-control" [(ngModel)]="article.abstract" name="artAbstract"
-                    #artAbstract="ngModel" [ngClass]="artAbstract.valid ? 'ng-valid.required': 'ng-invalid.required'">
+                    #artAbstract="ngModel" [ngClass]="{'ng-valid': artAbstract.valid, 'ng-invalid': !artAbstract.valid}">
 
                 <div class="alert alert-danger" *ngIf="!artAbstract.pristine &&  !artAbstract.valid">
                     <div *ngIf="artAbstract.errors && artAbstract.errors['required']">Please provide an abstract for the
@@ -91,8 +94,9 @@
             <div class="button-container">
                 <button class="btn btn-primary btn-sm mr-1" type="button" (click)="clearForm()">Clear</button>
                 <button class="btn btn-primary btn-sm mr-1" type="button" (click)="saveArticle()"
-                    [disabled]="!articleForm.form.valid">Save</button>
+                    [disabled]="!articleForm.form.valid || !isThumbnailValid()">Save</button>
             </div>  
+            <i>*=mandatory</i>
     </div>
 
 </form>

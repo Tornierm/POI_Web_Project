@@ -1,3 +1,8 @@
+/* Shown for (in-)valid fields */
+.ng-invalid {
+    border: 2px solid red;
+  }
+
 .grid{
     display: grid;
     grid-template-columns: repeat(2, 1fr);
