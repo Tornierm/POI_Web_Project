@@ -10,9 +10,10 @@ import { NewsService } from '../services/news.service';
 import { Observable, catchError } from 'rxjs';
 import { DomSanitizer } from '@angular/platform-browser';
 import { HttpErrorResponse } from '@angular/common/http';
-import { MatDialog, MatDialogRef } from '@angular/material/dialog';
+import { MatDialog, MatDialogRef, MAT_DIALOG_DATA} from '@angular/material/dialog';
 import { ConfirmDialogComponent } from '../confirm-dialog/confirm-dialog.component';
-import { Dialog, DialogRef } from '@angular/cdk/dialog';
+
+
 
 @Component({
   selector: 'app-article-list',
@@ -67,8 +68,25 @@ export class ArticleListComponent implements OnInit {
     this.router.navigate([`/edit/${id}`, {}]);
   }
 
+  openModel(){
+    debugger
+    const divModal = document.getElementById('myModal');
+    if(divModal != null){
+      divModal.style.display = 'block';
+    }
+    
+  }
+
+  closeModel(){
+    const divModal = document.getElementById('myModal');
+    if(divModal != null){
+      divModal.style.display = 'none';
+    }
+    
+  }
+
   deleteArticle(id: number){
-    const dialogRef = this.dialog.open(ConfirmDialogComponent, {
+    let dialogRef = this.dialog.open(ConfirmDialogComponent, {
       data: { message: 'Are you sure you want to delete this article?' },
     });
   
@@ -79,12 +97,14 @@ export class ArticleListComponent implements OnInit {
         ).subscribe(
           () => {
             console.log("process complete"),
-            window.alert("This article has been deleted successfully."),
             this.update()
+            
           }
         )
+        window.alert("This article has been deleted successfully.");
       }
     }) 
+    
   }
 
 
