@@ -36,6 +36,7 @@ export class ArticleEditionComponent implements OnInit {
     is_public: 0,
     username: ""
   } ;
+  
   @ViewChild('articleForm') articleForm: any;
   user!: User | null;
   
