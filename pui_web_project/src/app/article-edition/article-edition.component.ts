@@ -176,4 +176,7 @@ export class ArticleEditionComponent implements OnInit {
     }
     return true;
   }
+  isThumbnailValid(): boolean {
+    return !!this.article.image_description;
+  }
 }
