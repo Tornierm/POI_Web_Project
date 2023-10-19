@@ -54,6 +54,7 @@ export class ArticleListComponent implements OnInit {
       catchError(this.handleError)
     ).subscribe(
       data => {
+        console.log(data)
         this.articles = data
       },
       () => console.log("process complete"),
