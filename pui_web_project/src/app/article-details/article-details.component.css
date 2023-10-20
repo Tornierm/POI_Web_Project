@@ -9,6 +9,7 @@
         'meta meta meta meta'
         'image image image image'
         'body body body body'
+        'footer footer footer footer'
     ;
     padding: 24px;
     gap:16px;
@@ -16,6 +17,12 @@
     width: 100%;
     margin-right: auto;
     margin-left: auto;
+}
+
+.footer{
+    grid-area: footer;
+    display: flex;
+    justify-content: space-between;
 }
 
 .title{

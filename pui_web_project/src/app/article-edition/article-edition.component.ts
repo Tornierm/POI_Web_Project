@@ -109,7 +109,7 @@ export class ArticleEditionComponent implements OnInit {
       newArticle = this.newsService.updateArticle(this.article).subscribe(
         (data) => {
           console.log(data);
-          window.alert("The article" + this.article.title + "has been saved succesfully!");
+          window.alert("The article" + " " + this.article.title + " has been saved succesfully!");
           this.clearForm()
           this.back()
         },
@@ -127,7 +127,7 @@ export class ArticleEditionComponent implements OnInit {
       this.newsService.createArticle(tmp).subscribe(
         (next) => {
           console.log(next);
-          window.alert("The article" + this.article.title + "has been saved succesfully!");
+          window.alert("The article " + this.article.title + " has been saved succesfully!");
           this.clearForm()
           this.back();
         },
@@ -178,6 +178,11 @@ export class ArticleEditionComponent implements OnInit {
     return true;
   }
   isThumbnailValid(): boolean {
-    return !!this.article.image_description;
+    if(this.article.image_data){
+      return true;
+    }
+    else {
+      return !!this.article.image_description;
+    }
   }
 }

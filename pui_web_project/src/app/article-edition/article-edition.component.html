@@ -12,16 +12,18 @@
                 <!--Title-->
                 <h4>Title:* </h4>
                 <input type="text" class="form-control" [(ngModel)]="article.title" name="artTitle" #artTitle="ngModel"
-                    required [ngClass]="{'ng-valid': artTitle.valid, 'ng-invalid': !artTitle.valid}">
+                    required>
 
                 <div class="alert alert-danger" *ngIf=" !artTitle.pristine && !artTitle.valid">
                     <div *ngIf="artTitle.errors && artTitle.errors['required']">Please provide a title for the article.
                     </div>
                 </div>
             </div>
+            
+
             <div class="form-group col-md-4 thumbnail-container">
                 <!--Thumbnail-->
-                <h4>Thumbnail:* </h4>
+                <h4>Thumbnail: </h4>
                 <img class="image" [src]="'data:' + article.image_media_type + ';base64,' + article.image_data ">
                 <br>
                 <input 
@@ -31,8 +33,9 @@
                     name="artImage" 
                     #artImage="ngModel"
                     [(ngModel)]="article.image_description"
-                >
-                <div class="alert alert-danger" *ngIf="this.id === 'null' && !isThumbnailValid()">
+                    >
+
+                <div class="alert alert-danger" *ngIf="this.id === 'null' && !isThumbnailValid() && !artImage.pristine">
                     Please select a thumbnail image.
                   </div>
             </div>
@@ -47,7 +50,7 @@
                     [(ngModel)]="article.category"
                     class="form-select"
                     #artCat="ngModel"
-                    required [ngClass]="{'ng-valid': artCat.valid, 'ng-invalid': !artCat.valid}">
+                    required>
                 >
                     <option value="National">National</option>
                     <option value="International">International</option>
@@ -91,29 +94,31 @@
                 </textarea>
             </div>
             <div class="button-container">
+                <i>*=mandatory</i>
                 <button class="btn btn-primary btn-sm mr-1" type="button" (click)="clearForm()">Clear</button>
                 <button class="btn btn-primary btn-sm mr-1" type="button" (click)="saveArticle()"
                     [disabled]="!articleForm.form.valid || !isThumbnailValid()">Save</button>
             </div>  
-            <i>*=mandatory</i>
+            
+    
+            <h1 class="info-preview"><br>PREVIEW<br><br></h1>
+            <h2 class="title-preview">{{ article.title }}</h2>
+            <h4 class="subtitle-preview">{{ article.subtitle }}</h4>
+            <p class="abstract-preview" [innerHTML]="article.abstract"></p>
+            <p class="category-preview"><strong>Category: </strong> {{ article.category }}</p>
+        
+            <img
+                class="image-preview"
+                *ngIf="article.image_data && article.image_media_type"
+                [src]="'data:' + article.image_media_type + ';base64,' + article.image_data"
+            >
+        
+            <div class="body-preview" [innerHTML]="article.body"></div>
+    
+    
+    
     </div>
 
 </form>
-</div>
-  
-<div class="preview-container">
-    <h1><br>PREVIEW<br><br></h1>
-    <h2 class="title">{{ article.title }}</h2>
-    <h4 class="subtitle">{{ article.subtitle }}</h4>
-    <p class="abstract" [innerHTML]="article.abstract"></p>
-    <p class="category"><strong>Category: </strong> {{ article.category }}</p>
-
-    <img
-        class="image"
-        *ngIf="article.image_data && article.image_media_type"
-        [src]="'data:' + article.image_media_type + ';base64,' + article.image_data"
-    >
-
-    <div class="body" [innerHTML]="article.body"></div>
     
 </div>

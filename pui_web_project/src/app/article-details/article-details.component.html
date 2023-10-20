@@ -11,10 +11,13 @@
 
     <div class="body" [innerHTML]="article.body"></div>
     <div class="meta">
-        <p><strong>Last Modified:</strong> {{ article.update_date | date }}</p>
-        <p><strong>Last Modified By:</strong> {{ article.id_user }}</p>
         <p class="category"><strong>Category: </strong> {{ article.category }}</p>
 
+    </div>
+
+    <div class="footer">
+        <p><strong>Last Modified:</strong> {{ article.update_date | date }}</p>
+        <p><strong>Last Modified By:</strong> {{ article.id_user }}</p>
     </div>
     
     <div class="back">
