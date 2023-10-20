@@ -1,7 +1,5 @@
 /* Shown for (in-)valid fields */
-.ng-invalid {
-    border: 2px solid red;
-  }
+
 
 .grid{
     display: grid;
@@ -15,6 +13,13 @@
         'abstract image'
         'body body'
         'buttons buttons'
+        'info-preview info-preview'
+        'title-preview title-preview'
+        'category-preview category-preview'
+        'subtitle-preview subtitle-preview'
+        'abstract-preview abstract-preview'
+        'image-preview image-preview' 
+        'body-preview body-preview'
     ;
     margin-right: auto;
     margin-left: auto;
@@ -38,6 +43,13 @@
             'abstract'
             'body'
             'buttons'
+            'info-preview'
+            'title-preview'
+            'category-preview'
+            'subtitle-preview'
+            'abstract-preview'
+            'image-preview'
+            'body-preview'
         ;
     }
   }
@@ -56,6 +68,41 @@
     display:flex;
     gap:8px;
     justify-content: flex-end;
+}
+
+.info-preview {
+    grid-area: info-preview;
+    justify-content: center;
+}
+
+.title-preview {
+    grid-area: title-preview;
+    justify-content: center;
+}
+
+.image-preview {
+    width: 100%;
+    grid-area: image-preview;
+    justify-content: center;
+}
+
+.category-preview {
+    grid-area: category-preview;
+    justify-content: center;
+}
+
+.subtitle-preview {
+    grid-area: subtitle-preview;
+    justify-content: center;
+}
+
+.abstract-preview {
+    grid-area: abstract-preview;
+    justify-content: center;
+}
+.body-preview {
+    grid-area: body-preview;
+    justify-content: center;
 }
 
 .body-container{

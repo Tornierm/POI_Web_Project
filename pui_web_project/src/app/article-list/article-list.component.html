@@ -9,6 +9,11 @@
       justify-content: flex-end;
       gap: 16px;
     }
+    
+
+    .error-message {
+      margin: 16px 0px 16px 0px;
+    }
 
     .card-columns {
       column-count: 1;
@@ -109,6 +114,10 @@
         <!-- Welcome message + Username and sign out button -->
       </div>
 
+      <div class="alert alert-danger error-message" role="alert" *ngIf="loginFailed;">
+        The entered username or password are wrong. Please try again.
+      </div>
+
       <ng-template #elseBlock>
         <div class="login-container" *ngIf="loggedInUser !== null">
           <p class="text-end"> Welcome {{loggedInUser.username}}</p>
@@ -165,7 +174,7 @@
           </a>
           <h5 class="text-center">{{article.subtitle}}</h5> <!-- Subtitle of the article-->
           <p class="card-text text-center" [innerHTML]="article.abstract"></p> <!-- Abstract of the article-->
-          <div class="row justify-content-end" *ngIf="isLogged">
+          <div class="row justify-content-end gap-2" *ngIf="isLogged">
             <!-- Display the edit & delete buttons only if username is empty-->
             <button class=" col-3 btn btn-primary" (click)="editArticle(article.id)">Edit</button>
             <!-- Cards contain buttons to edit articles -->

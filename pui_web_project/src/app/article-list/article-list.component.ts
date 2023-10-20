@@ -109,10 +109,17 @@ export class ArticleListComponent implements OnInit {
   }
 
 
+  loginFailed: boolean = false;
   handleError(err: HttpErrorResponse): Observable<never>{
+    if(err.status == 401){
+      this.loginFailed = true;
+    }
+    else{
     window.alert("An Error occured:" + err.message);
+    }
     throw new Error('Method not implemented.');
   }
+
 
   searchTerm: string = "";
 
@@ -154,9 +161,11 @@ export class ArticleListComponent implements OnInit {
       },
       () => {
         console.log("process completed");
+        this.loginFailed = false;
       }
     )
   }
+
 
   logout(){
     this.loginService.logout()
